@@ -1,0 +1,28 @@
+.className {
+    color: var(--light-green);
+    font-weight: 700;
+}
+
+.keyword {
+    color: var(--blue);
+}
+
+.variable {
+    color: var(--light-blue);
+}
+
+.string {
+    color: var(--orange);
+}
+
+.comment {
+    color: var(--green);
+}
+
+.syntax {
+    color: var(--yellow);
+}
+
+.indent {
+    padding-left: 2em;
+}

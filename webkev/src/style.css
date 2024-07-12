@@ -1,0 +1,65 @@
+:root {
+	/* --main-bg-colour: #2A2C35; */
+	--main-bg-colour: #181818;
+	--main-text-colour: #dee1e9;
+	/* --secondary-background-colour: #1F252E; */
+	--secondary-bg-colour: #1f1f1f;
+
+	--green: #669a54;
+	--light-green: #4bc1aa;
+	--blue: #4bbbf8;
+	--light-blue: #97d6f7;
+	--yellow: #dcdcaf;
+	--orange: #c5947d;
+	--grey: #a9a9a9;
+
+	font-family: "Fira Mono", monospace;
+	line-height: 1.5;
+	font-weight: 400;
+
+	color: var(--main-text-colour);
+	background-color: var(--main-bg-colour);
+
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-text-size-adjust: 100%;
+}
+
+body {
+	margin: 0;
+}
+
+.bodyContent {
+	padding: 2em;
+	flex: auto;
+	min-height: 100vh;
+}
+
+a {
+	color: var(--grey);
+}
+
+h2 {
+	font-size: unset;
+}
+
+main {
+	flex: auto;
+	display: flex;
+	max-width: 1280px;
+}
+
+@media (max-width: 639px) {
+	main {
+		margin: 2rem;
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		color: #ccc;
+		background-color: #1a1a1a;
+	}
+}

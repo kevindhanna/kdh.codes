@@ -1,0 +1,40 @@
+.navbar {
+    padding: 2em;
+    width: 20vw;
+    max-width: 500px;
+    border-right: 2px solid var(--grey);
+}
+
+.navHeader {
+    padding-bottom: 3em;
+    display: flex;
+    gap: 0.5em;
+}
+
+.navLogo {
+    fill: var(--grey);
+    width: 3em;
+    height: 3em;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.navIcon {
+    width: 2.5em;
+    height: 2.5em;
+    fill: var(--grey);
+}
+
+.navTitle {
+    font-size: 2em;
+}
+
+.navLink {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+}
+a {
+    text-decoration: none;
+}

@@ -1,0 +1,31 @@
+.header {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 3em;
+}
+
+.headerContent {
+    text-align: center;
+}
+
+.logo {
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+}
+
+.headerLinks {
+    display: flex;
+    gap: 2em;
+}
+
+.headerLink {
+    display: flex;
+    gap: 1em;
+}
+
+.linkLogo {
+    width: 25px;
+    height: 25px;
+    overflow: hidden;
+}
