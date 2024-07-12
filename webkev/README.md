@@ -1,15 +1,9 @@
-# `create-preact`
+# `WebKev`
 
-<h2 align="center">
-  <img height="256" width="256" src="./src/assets/preact.svg">
-</h2>
+This is a Preact SSR (for now? Mabye?) app that just shows some info about me for now.
 
-<h3 align="center">Get started using Preact and Vite!</h3>
-
-## Getting Started
-
-- `npm run dev` - Starts a dev server at http://localhost:5173/
-
-- `npm run build` - Builds for production, emitting to `dist/`. Prerenders all found routes in app to static HTML
-
-- `npm run preview` - Starts a server at http://localhost:4173/ to test production build locally
+Dreams include but are not limited to:
+- themes
+- expanded experience section with a more in-depth description on the right in _another_ sidebar
+- maybe some personal project stuff? Cassette if it ever happens?
+- a lexer to parse a markdown version of the `employer` structured data and do all the colourisation in a fun way I guess
