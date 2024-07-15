@@ -1,0 +1,10 @@
+name: kevfrastructure
+runtime:
+  name: nodejs
+  options:
+    packagemanager: yarn
+description: Infrastructure for my personal site
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: digitalocean-typescript
