@@ -12,6 +12,7 @@
     "preact-render-to-string": "^6.5.5"
   },
   "devDependencies": {
+    "@types/bun": "^1.1.6",
     "@preact/preset-vite": "^2.8.2",
     "eslint": "^8.57.0",
     "eslint-config-preact": "^1.4.0",

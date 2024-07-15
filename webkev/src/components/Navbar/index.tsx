@@ -1,6 +1,6 @@
 import { useLocation } from "preact-iso";
 import styles from "./style.module.css";
-import { KIcon, SpeakIcon, CodeIcon } from "../Icon";
+import { KIcon, SpeakIcon, CodeIcon, MagnifierIcon } from "../Icon";
 import { JSXInternal } from "preact";
 
 const NavLink = ({
@@ -36,7 +36,8 @@ export function Navbar() {
         </div>
       </a>
       <nav>
-        <NavLink name="What I've been up to" icon={CodeIcon} path="/" />
+        <NavLink name="History" icon={CodeIcon} path="/" />
+        <NavLink name="About me" icon={MagnifierIcon} path="/bio" />
         <NavLink name="Contact me" icon={SpeakIcon} path="/contact" />
       </nav>
     </div>

@@ -1,0 +1,8 @@
+.pane {
+    border-left: 2px solid var(--grey);
+    max-width: 20vw;
+    text-align: left;
+    padding-left: 2em;
+    padding-top: 2em;
+    colour: var(--grey);
+}

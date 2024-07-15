@@ -3,6 +3,12 @@
     font-weight: 700;
 }
 
+a {
+    &:hover {
+        color: var(--white);
+    }
+}
+
 .keyword {
     color: var(--blue);
 }
@@ -25,4 +31,5 @@
 
 .indent {
     padding-left: 2em;
+    border-left: 1px solid var(--dark-grey);
 }

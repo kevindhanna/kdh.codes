@@ -1,7 +1,9 @@
 .header {
     display: flex;
     justify-content: center;
-    padding-bottom: 3em;
+    padding-top: 0.5em;
+    padding-bottom: 1em;
+    border-bottom: 2px solid var(--grey);
 }
 
 .headerContent {
@@ -22,6 +24,12 @@
 .headerLink {
     display: flex;
     gap: 1em;
+
+    &:hover {
+        a {
+            color: var(--white);
+        }
+    }
 }
 
 .linkLogo {

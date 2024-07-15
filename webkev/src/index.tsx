@@ -5,6 +5,7 @@ import {
   hydrate,
   prerender as ssr,
 } from "preact-iso";
+import { renderToReadableStream } from "preact-render-to-string/stream";
 
 import { Navbar } from "./components/Navbar";
 import { Experience } from "./pages/Experience";
@@ -17,12 +18,15 @@ export function App() {
     <LocationProvider>
       <main>
         <Navbar />
-        <div className="bodyContent">
+        <div className="body">
           <Header />
-          <Router>
-            <Route path="/" component={Experience} />
-            <Route default component={NotFound} />
-          </Router>
+          <div className="bodyContent">
+            <Router>
+              <Route path="/bio" component={NotFound} />
+              <Route path="/" component={Experience} />
+              <Route default component={NotFound} />
+            </Router>
+          </div>
         </div>
       </main>
     </LocationProvider>
@@ -33,6 +37,6 @@ if (typeof window !== "undefined") {
   hydrate(<App />, document.getElementById("app"));
 }
 
-export async function prerender(data) {
-  return await ssr(<App {...data} />);
+export async function prerender() {
+  return await ssr(<App />);
 }

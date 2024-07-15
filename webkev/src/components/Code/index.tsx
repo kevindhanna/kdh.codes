@@ -15,7 +15,7 @@ export const Variable = ({ children }: { children: ComponentChildren }) => (
 
 export const StringEl = ({ children }: { children: ComponentChildren }) => (
   <text>
-    <text className={styles.string}>'{children}'</text>;
+    <text className={styles.string}>'{children}'</text>
   </text>
 );
 

@@ -1,7 +1,6 @@
 .navbar {
     padding: 2em;
-    width: 20vw;
-    max-width: 500px;
+    padding-right: 2.5em;
     border-right: 2px solid var(--grey);
 }
 
@@ -9,6 +8,13 @@
     padding-bottom: 3em;
     display: flex;
     gap: 0.5em;
+
+    &:hover {
+        color: var(--white);
+        path {
+            fill: var(--white);
+        }
+    }
 }
 
 .navLogo {
@@ -21,8 +27,8 @@
 }
 
 .navIcon {
-    width: 2.5em;
-    height: 2.5em;
+    width: 1.5em;
+    height: 1.5em;
     fill: var(--grey);
 }
 
@@ -33,7 +39,16 @@
 .navLink {
     display: flex;
     align-items: center;
-    gap: 0.5em;
+    gap: 1em;
+    padding: 0.5em;
+
+    &:hover {
+        color: var(--white);
+
+        path {
+            fill: var(--white);
+        }
+    }
 }
 a {
     text-decoration: none;

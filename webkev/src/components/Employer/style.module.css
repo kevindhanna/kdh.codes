@@ -1,16 +1,10 @@
+.Employer {
+    border-radius: 1em;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+}
+
 .projectList {
-    padding-top: 1em;
     display: flex;
     flex-direction: column;
-    gap: 1em;
-}
-.Employer {
-    .header {
-        display: flex;
-        gap: 2rem;
-    }
-
-    .class-name {
-        font-weight: 700;
-    }
 }
