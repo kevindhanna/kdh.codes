@@ -1,4 +1,4 @@
-export const KIcon = ({ className }: { className?: string }) => (
+export const KIcon = () => (
   <svg
     version="1.1"
     id="Layer_1"

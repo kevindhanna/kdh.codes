@@ -1,7 +1,8 @@
 .navbar {
     padding: 2em;
     padding-right: 2.5em;
-    border-right: 2px solid var(--grey);
+    border-right: 2px solid var(--border);
+    background: var(--main-bg-colour);
 }
 
 .navHeader {
@@ -10,15 +11,15 @@
     gap: 0.5em;
 
     &:hover {
-        color: var(--white);
+        color: var(--link-hover);
         path {
-            fill: var(--white);
+            fill: var(--link-hover);
         }
     }
 }
 
 .navLogo {
-    fill: var(--grey);
+    fill: var(--main-text-colour);
     width: 3em;
     height: 3em;
     text-align: center;
@@ -29,7 +30,7 @@
 .navIcon {
     width: 1.5em;
     height: 1.5em;
-    fill: var(--grey);
+    fill: var(--main-text-colour);
 }
 
 .navTitle {
@@ -43,10 +44,10 @@
     padding: 0.5em;
 
     &:hover {
-        color: var(--white);
+        color: var(--link-hover);
 
         path {
-            fill: var(--white);
+            fill: var(--link-hover);
         }
     }
 }

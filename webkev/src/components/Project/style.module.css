@@ -1,9 +1,17 @@
 .Project {
-    border-radius: 20px;
+    /* border-radius: 15px; */
     &:hover {
         transition: all 0.1s ease-in-out;
         background: var(--tertiary-bg-colour);
         padding-left: 1em;
         margin-left: -1em;
     }
+}
+
+.line {
+    background: var(--tertiary-bg-colour);
+    position: relative;
+    left: 0;
+    width: 50vw;
+    border: 1px solid red;
 }

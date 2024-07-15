@@ -1,6 +1,10 @@
 import { type ComponentChildren } from "preact";
 import styles from "./style.module.css";
 
+export const Syntax = ({ children }: { children: ComponentChildren }) => (
+  <text className={styles.syntax}>{children}</text>
+);
+
 export const Keyword = ({ children }: { children: ComponentChildren }) => (
   <text className={styles.keyword}>{children}</text>
 );

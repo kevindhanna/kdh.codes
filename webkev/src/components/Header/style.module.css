@@ -1,9 +1,14 @@
 .header {
+    position: relative;
+    z-index: 2;
+    background-color: var(--main-bg-colour);
+    top: 0;
+    right: 0;
     display: flex;
     justify-content: center;
-    padding-top: 0.5em;
+    padding-top: 1em;
     padding-bottom: 1em;
-    border-bottom: 2px solid var(--grey);
+    border-bottom: 2px solid var(--border);
 }
 
 .headerContent {
@@ -24,12 +29,6 @@
 .headerLink {
     display: flex;
     gap: 1em;
-
-    &:hover {
-        a {
-            color: var(--white);
-        }
-    }
 }
 
 .linkLogo {

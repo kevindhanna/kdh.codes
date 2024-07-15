@@ -30,22 +30,15 @@
 pre {
 	margin: 0;
 	counter-reset: line;
-	/* background: #303030; */
-	/* color: #f1f1f1; */
-	/* padding: 10px 16px; */
-	/* border-radius: 2px; */
-	/* border-top: 4px solid #00aeef; */
 }
 pre span {
 	display: block;
-	/* line-height: 1.5rem; */
 }
 pre span:before {
 	counter-increment: line;
 
 	content: counter(line);
 	display: inline-block;
-	border-right: 1px solid var(--light-grey);
 	padding: 0 0.5em;
-	color: #888;
+	color: var(--line-numbers);
 }

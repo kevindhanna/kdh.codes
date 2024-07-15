@@ -1,35 +1,35 @@
 .className {
-    color: var(--light-green);
+    color: var(--class-name);
     font-weight: 700;
 }
 
 a {
     &:hover {
-        color: var(--white);
+        color: var(--link-hover);
     }
 }
 
 .keyword {
-    color: var(--blue);
+    color: var(--keyword);
 }
 
 .variable {
-    color: var(--light-blue);
+    color: var(--variable);
 }
 
 .string {
-    color: var(--orange);
+    color: var(--string);
 }
 
 .comment {
-    color: var(--green);
+    color: var(--comment);
 }
 
 .syntax {
-    color: var(--yellow);
+    color: var(--syntax);
 }
 
 .indent {
     padding-left: 2em;
-    border-left: 1px solid var(--dark-grey);
+    border-left: 1px solid var(--indent-indicator);
 }

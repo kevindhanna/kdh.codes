@@ -1,8 +1,12 @@
 .pane {
-    border-left: 2px solid var(--grey);
-    max-width: 20vw;
+    position: fixed;
+    top: 150px;
+    right: 0px;
+    width: 15vw;
+    z-index: 1;
+    background: var(--main-bg-colour);
+    border-left: 2px solid var(--main-bg-colour);
     text-align: left;
-    padding-left: 2em;
-    padding-top: 2em;
+    padding: 2em;
     colour: var(--grey);
 }

@@ -12,23 +12,26 @@ import { Experience } from "./pages/Experience";
 import { NotFound } from "./pages/_404.jsx";
 import "./style.css";
 import { Header } from "./components/Header";
+import { ThemeProvider } from "./components/ThemeProvider";
 
 export function App() {
   return (
     <LocationProvider>
-      <main>
-        <Navbar />
-        <div className="body">
-          <Header />
-          <div className="bodyContent">
-            <Router>
-              <Route path="/bio" component={NotFound} />
-              <Route path="/" component={Experience} />
-              <Route default component={NotFound} />
-            </Router>
+      <ThemeProvider>
+        <main>
+          <Navbar />
+          <div className="body">
+            <Header />
+            <div className="bodyContent">
+              <Router>
+                <Route path="/bio" component={NotFound} />
+                <Route path="/" component={Experience} />
+                <Route default component={NotFound} />
+              </Router>
+            </div>
           </div>
-        </div>
-      </main>
+        </main>
+      </ThemeProvider>
     </LocationProvider>
   );
 }

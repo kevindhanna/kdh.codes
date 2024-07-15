@@ -1,8 +1,15 @@
-import { Keyword, Link, Indent, ClassName, Comment, StringEl } from "../Code";
+import {
+  Keyword,
+  Link,
+  Indent,
+  ClassName,
+  Comment,
+  StringEl,
+  Syntax,
+} from "../Code";
 import { Employer as EmployerType } from "../../models/Employer";
 import { Project } from "../Project";
 import styles from "./style.module.css";
-import { Project as ProjectType } from "../../models/Project";
 
 export const Employer = ({
   name,
@@ -11,19 +18,18 @@ export const Employer = ({
   duration,
   projects,
   technologies,
-  setActiveProject,
-}: EmployerType & { setActiveProject: (project: ProjectType) => void }) => (
+}: EmployerType) => (
   <div className={styles.Employer}>
     <text>
       <Keyword>{"emp "}</Keyword>
       <ClassName>{name}</ClassName>(<StringEl>{duration}</StringEl>)
-      <text>{": "}</text>
+      <Syntax>{": "}</Syntax>
       <Link>
         <a href={`https://${website}`} target="blank">
           {website}
         </a>
       </Link>
-      <text>{" {"}</text>
+      <Syntax>{" {"}</Syntax>
     </text>
     <Indent>
       <Comment>{description}</Comment>
@@ -31,18 +37,13 @@ export const Employer = ({
       <br />
       <div className={styles.projectList}>
         {projects.map((p) => (
-          <Project
-            name={p.name}
-            description={p.description}
-            onMouseEnter={() => setActiveProject(p)}
-            onMouseLeave={() => setActiveProject(undefined)}
-          />
+          <Project {...p} />
         ))}
       </div>
       <br />
       <text>
         <Keyword>{"tech"}</Keyword>
-        {" = ["}
+        <Syntax>{" = ["}</Syntax>
         <br />
         <Indent>
           {technologies.map((t) => (
@@ -53,9 +54,9 @@ export const Employer = ({
             </>
           ))}
         </Indent>
-        {"]"}
+        <Syntax>{"]"}</Syntax>
       </text>
     </Indent>
-    <text>{"}"}</text>
+    <Syntax>{"}"}</Syntax>
   </div>
 );

@@ -1,11 +1,4 @@
 :root {
-	/* --main-bg-colour: #2A2C35; */
-	--main-bg-colour: #181818;
-	--main-text-colour: #dee1e9;
-	/* --secondary-background-colour: #1F252E; */
-	--secondary-bg-colour: #232323;
-	--tertiary-bg-colour: #2f2f2f;
-
 	--white: #ffffff;
 	--green: #669a54;
 	--light-green: #4bc1aa;
@@ -16,7 +9,30 @@
 	--dark-grey: #444444;
 	--grey: #a9a9a9;
 	--light-grey: #f1f1f1;
+	--lighter-grey: #bbbbbb;
+	--burnt-orange: #d45f50;
+	--tree-green: #659f58;
+	--sea-blue: #3982b7;
+	--warm-purple: #a44aa9;
+	--sky-blue: #4e76ea;
+	--cloud-grey: #9da0a4;
 
+	--main-bg-colour: #f0f0f0;
+	--main-text-colour: #383a42;
+	--secondary-bg-colour: #fafafa;
+	--tertiary-bg-colour: #f0f0f0;
+	--shadow: var(--grey);
+	--border: var(--lighter-grey);
+
+	--line-numbers: #888;
+	--class-name: var(--warm-purple);
+	--link-hover: var(--cloud-grey);
+	--keyword: var(--burnt-orange);
+	--variable: var(--sea-blue);
+	--string: var(--tree-green);
+	--comment: var(--cloud-grey);
+	--syntax: var(--sky-blue);
+	--indent-indicator: var(--light-grey);
 	font-family: "Fira Mono", monospace;
 
 	line-height: 1.5;
@@ -44,16 +60,15 @@ body {
 
 .bodyContent {
 	width: 100%;
-	-moz-box-shadow: inset 0 0 10px #000;
-	box-shadow: inset 0 0 10px #000;
+	-moz-box-shadow: inset 0 0 10px var(--shadow);
+	box-shadow: inset 0 0 10px var(--shadow);
 	background: var(--secondary-bg-colour);
-	color: var(--light-grey);
 	flex: auto;
 	overflow-y: auto;
 }
 
 a {
-	color: var(--grey);
+	color: var(--main-text-colour);
 }
 
 h2 {
@@ -63,7 +78,6 @@ h2 {
 main {
 	display: flex;
 	max-height: 100vh;
-	/* max-width: 1280px; */
 }
 
 @media (max-width: 639px) {
@@ -74,7 +88,20 @@ main {
 
 @media (prefers-color-scheme: dark) {
 	:root {
-		color: #ccc;
-		background-color: #1a1a1a;
+		--secondary-bg-colour: #181818;
+		--main-text-colour: #dee1e9;
+		--main-bg-colour: #232323;
+		--tertiary-bg-colour: #2f2f2f;
+
+		--class-name: var(--light-green);
+		--link-hover: var(--white);
+		--keyword: var(--blue);
+		--variable: var(--light-blue);
+		--string: var(--orange);
+		--comment: var(--green);
+		--syntax: var(--main-text-colour);
+		--indent-indicator: var(--dark-grey);
+		--shadow: #000;
+		--border: var(--secondary-bg-colour);
 	}
 }
