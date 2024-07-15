@@ -1,7 +1,28 @@
-import { useLocation } from "preact-iso";
-import styles from "./style.module.css";
-import { KIcon, SpeakIcon, CodeIcon, MagnifierIcon } from "../Icon";
 import { JSXInternal } from "preact";
+import { useLocation } from "preact-iso";
+import githubDark from "../../assets/github-mark-white.svg";
+import github from "../../assets/github-mark.svg";
+import linkedinDark from "../../assets/linkedin-dark.png";
+import linkedin from "../../assets/linkedin.png";
+import { useTheme } from "../../hooks/useTheme";
+import { CodeIcon, KIcon, MagnifierIcon, SpeakIcon } from "../Icon";
+import { Theme } from "../ThemeProvider";
+import styles from "./style.module.css";
+
+const ExternalLink = ({
+  logoPath,
+  name,
+  href,
+}: {
+  logoPath: string;
+  name: string;
+  href: string;
+}) => (
+  <div className={styles.navLink}>
+    <img src={logoPath} className={styles.linkLogo} />
+    <a href={href}>{name}</a>
+  </div>
+);
 
 const NavLink = ({
   name,
@@ -24,6 +45,7 @@ const NavLink = ({
 
 export function Navbar() {
   const { url } = useLocation();
+  const theme = useTheme();
 
   return (
     <div className={styles.navbar}>
@@ -35,10 +57,21 @@ export function Navbar() {
           <text className={styles.navTitle}>kdh.codes</text>
         </div>
       </a>
+
       <nav>
         <NavLink name="History" icon={CodeIcon} path="/" />
         <NavLink name="About me" icon={MagnifierIcon} path="/bio" />
         <NavLink name="Contact me" icon={SpeakIcon} path="/contact" />
+        <ExternalLink
+          name="github.com/kevindhanna"
+          href="https://github.com/kevindhanna"
+          logoPath={theme === Theme.dark ? githubDark : github}
+        />
+        <ExternalLink
+          name="linkedin.com"
+          href="https://www.linkedin.com/in/kevin-hanna-56033785/"
+          logoPath={theme === Theme.dark ? linkedinDark : linkedin}
+        />
       </nav>
     </div>
   );

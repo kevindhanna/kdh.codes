@@ -92,13 +92,27 @@ After the roll out, upwards of 40% of jobs booked on the platform went through t
 				name: "Natural Language Job Creation API",
 				description:
 					"Leverage AI to create jobs from natural language descriptions",
-				detail: "",
+				detail: `
+A large proportion of jobs booked on the Contact platform were from bookers emailing the internal booking team with a description of the job they'd like to book and what kind of creatives they were looking for.
+
+This made for a nice high-touch experience for the booker, but was very inefficient in terms of time spent booking each job.
+
+I had the idea to use an LLM to convert these natural language descriptions into structured data that we could inject into our database to reduce the manual workload of creating a job - info like date, location, budget, number of models required etc could be acccurately extracted by the LLM and the booking team's manual input was greatly reduced.
+				`,
 			},
 			{
 				name: "Talent Query Performance Improvements",
 				description:
 					"Optimise talent search queries, improving performance by over 50%",
-				detail: "",
+				detail: `
+The main function of contact.xyz is to act as a sort of marketplace for models and photographers - booking agents would peruse the talent on the platform, choose people they thought matched the style of their booking, and then go on to enter extra details and submit the job.
+
+Unfortunately the talent search query was quite slow - up to 1 second for each request.
+
+After some research, I deduced the problem was nested objects requiring multiple database calls to complete the query - also known as the n+1 problem.
+
+I added some small tweaks to the query handling and managed to reduce the average query time down to under 400ms.
+				`,
 			},
 		],
 	},
@@ -114,13 +128,23 @@ After the roll out, upwards of 40% of jobs booked on the platform went through t
 				name: "PDF Invoice Delivery",
 				description:
 					"Deliver order invoices to client Google Drives after checkout",
-				detail: "",
+				detail: `
+Farmers and buyers groups would place an order on the FutureFarm marketplace, but there was a manual step required for a FutureFarm admin to generate a PDF invoice and send it to the designated email address for the buyer.
+
+I created a microservice that automated this process, and (when configured by the buyer) could also insert the invoice into a Google Drive folder.
+				`,
 			},
 			{
 				name: "Test Suite Optimisation",
 				description:
 					"Reduce local test suite runtime from ~40 minutes to under 5 minutes",
-				detail: "",
+				detail: `
+When I joined FutureFarm, the full backend test suite ran on SQLite when run locally, in contrast to the production/CI MySQL database. What's more, for each test group the entire database was recreated and re-seeded - a very time consuming proceedure.
+
+First I changed the test suite to run against a local Postgres database, then wrote a small script to shard the suites into multiple threads targeting multiple databases.
+
+The final result was a local test suite that was actually usable and better reflected the production environment.
+				`,
 			},
 		],
 	},

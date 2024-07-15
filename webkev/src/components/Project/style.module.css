@@ -2,7 +2,8 @@
     /* border-radius: 15px; */
     &:hover {
         transition: all 0.1s ease-in-out;
-        background: var(--tertiary-bg-colour);
+        background: var(--main-bg-colour);
+        box-shadow: inset 0px 0px 0px 1px var(--syntax);
         padding-left: 1em;
         margin-left: -1em;
     }

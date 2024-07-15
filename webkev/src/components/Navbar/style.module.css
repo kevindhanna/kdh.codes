@@ -1,3 +1,14 @@
+.externalLink {
+    display: flex;
+    gap: 1em;
+}
+
+.linkLogo {
+    width: 1.5em;
+    height: 1.5em;
+    overflow: hidden;
+}
+
 .navbar {
     padding: 2em;
     padding-right: 2.5em;
@@ -6,7 +17,7 @@
 }
 
 .navHeader {
-    padding-bottom: 3em;
+    padding-bottom: 1em;
     display: flex;
     gap: 0.5em;
 

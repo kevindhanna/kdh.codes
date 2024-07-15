@@ -22,7 +22,6 @@ export const Project = ({ name, description, detail }: ProjectType) => {
         </Indent>
         <Syntax>{"}"}</Syntax>
       </div>
-      <span className={styles.line} />
       <ProjectDetail content={detail} visible={!!isActive} />
     </>
   );

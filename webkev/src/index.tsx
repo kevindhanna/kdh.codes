@@ -11,7 +11,6 @@ import { Navbar } from "./components/Navbar";
 import { Experience } from "./pages/Experience";
 import { NotFound } from "./pages/_404.jsx";
 import "./style.css";
-import { Header } from "./components/Header";
 import { ThemeProvider } from "./components/ThemeProvider";
 
 export function App() {
@@ -21,7 +20,6 @@ export function App() {
         <main>
           <Navbar />
           <div className="body">
-            <Header />
             <div className="bodyContent">
               <Router>
                 <Route path="/bio" component={NotFound} />
