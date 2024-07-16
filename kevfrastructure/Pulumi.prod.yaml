@@ -1,3 +1,8 @@
 config:
-  digitalocean:token:
-    secure: AAABADC7Ua5Y6Skag7pjZ/ncjmnrWoVVOwKb9f5ovG/weLP6A4HizYf6PAgdO/cQgRbiguvmNAxvSWF08ockNKHMT8IaTa3jhXV5kI5Uvs/eCrL20ij5AJvsByjSH0eRHWroFRyJJw==
+  aws:accessKey:
+    secure: AAABAFJoS3tf603jcK43RRllljmRmq7KHbsPY0EyJQZJTX1qVhyQ1SUitvQTud1oM5BMiA==
+  aws:allowedAccountIds:
+    - "471112530162"
+  aws:region: eu-north-1
+  aws:secretKey:
+    secure: AAABAH4CQX03iY8EA2jDMHadHryvGxMM/cz4C1CATf6nZQFjPA/w7pPRY00Z4hNl4zHnceo69oVqjb5LFHtvVDgFJdgjHLpV
