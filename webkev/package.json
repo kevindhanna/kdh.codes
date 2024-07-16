@@ -12,15 +12,17 @@
     "preact-render-to-string": "^6.5.5"
   },
   "devDependencies": {
-    "@types/bun": "^1.1.6",
     "@preact/preset-vite": "^2.8.2",
+    "@types/bun": "latest",
     "eslint": "^8.57.0",
     "eslint-config-preact": "^1.4.0",
-    "prettier": "^3.3.2",
+    "prettier": "^3.3.3",
     "typescript": "^5.5.3",
     "vite": "^5.2.2"
   },
   "eslintConfig": {
     "extends": "preact"
-  }
+  },
+  "name": "webkev",
+  "module": "index.ts"
 }

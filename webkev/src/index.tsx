@@ -5,7 +5,6 @@ import {
   hydrate,
   prerender as ssr,
 } from "preact-iso";
-import { renderToReadableStream } from "preact-render-to-string/stream";
 
 import { Navbar } from "./components/Navbar";
 import { Experience } from "./pages/Experience";

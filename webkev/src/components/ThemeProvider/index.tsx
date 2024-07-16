@@ -8,11 +8,13 @@ export enum Theme {
 
 export const ThemeContext = createContext(Theme.dark);
 export const ThemeProvider = ({ children }: { children: VNode }) => {
-  const [theme, setTheme] = useState(
-    window.matchMedia("(prefers-color-scheme: dark)").matches
+  let initialTheme = Theme.light;
+  if (typeof window !== "undefined") {
+    initialTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
       ? Theme.dark
-      : Theme.light,
-  );
+      : Theme.light;
+  }
+  const [theme, setTheme] = useState(initialTheme);
   useEffect(() => {
     const darkThemeListener = (e) => e.matches && setTheme(Theme.dark);
     const lightThemeListener = (e) => e.matches && setTheme(Theme.light);
