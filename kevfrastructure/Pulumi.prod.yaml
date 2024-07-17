@@ -6,3 +6,6 @@ config:
   aws:region: eu-north-1
   aws:secretKey:
     secure: AAABAH4CQX03iY8EA2jDMHadHryvGxMM/cz4C1CATf6nZQFjPA/w7pPRY00Z4hNl4zHnceo69oVqjb5LFHtvVDgFJdgjHLpV
+  github:compile-deploy-webkev-lambda-token:
+    secure: AAABAFNu57yGmlcpZpLGFP8M58eTQyXjuSvQ9nUv+FZeXUhjkFVDLp56hwMXxfKULlNr1hhzxarADSZcI5VNVWHAjFVIgYMVv8nc/imkk3HV+B4qq3LeAq2IJyS1eRsEL4TuvxG6rPB+/dttwmNNLI8ShSm05n8Rk82HusE=
+  lambdevin:bunTag: bun-v1.1.20
