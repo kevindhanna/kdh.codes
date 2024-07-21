@@ -1,13 +1,8 @@
-import { $, type ShellOutput } from "bun";
-import {
-    S3Client,
-    PutObjectCommand,
-    CreateBucketCommand,
-    DeleteObjectCommand,
-    DeleteBucketCommand,
-    paginateListObjectsV2,
-    GetObjectCommand,
-} from "@aws-sdk/client-s3";
+import { $, Glob, type ShellOutput } from "bun";
+import { mkdirSync } from "fs";
+import * as tar from "tar";
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { request } from "@octokit/request";
 
 const logResult = ({ stdout, stderr }: ShellOutput) => {
     console.log(stdout);
@@ -15,7 +10,7 @@ const logResult = ({ stdout, stderr }: ShellOutput) => {
 };
 
 export default {
-    async fetch(request: Request): Promise<Response> {
+    async fetch(trigger: Request): Promise<Response> {
         if (process.env.GITHUB_ACCESS_TOKEN === undefined) {
             console.error(
                 "Missing required environment variable GITHUB_ACCESS_TOKEN",
@@ -27,8 +22,10 @@ export default {
                 },
             });
         }
-        if (process.env.BUCKET_NAME === undefined) {
-            console.error("Missing required environment variable BUCKET");
+        if (process.env.WEBKEV_BUCKET_NAME === undefined) {
+            console.error(
+                "Missing required environment variable WEBKEV_BUCKET_NAME",
+            );
             return new Response("OK!", {
                 status: 200,
                 headers: {
@@ -37,23 +34,42 @@ export default {
             });
         }
 
-        logResult(
-            await $`git clone https://kevindhanna:$GITHUB_ACCESS_TOKEN@github.com/kevindhanna/kdh.codes`.env(
-                { GITHUB_ACCESS_TOKEN: process.env.GITHUB_ACCESS_TOKEN },
-            ),
+        const response = await request(
+            "GET /repos/kevindhanna/kdh.codes/tarball/main",
+            {
+                owner: "kevindhanna",
+                repo: "kdh.codes",
+                ref: "main",
+                headers: {
+                    "X-GitHub-Api-Version": "2022-11-28",
+                    Authorization: `Bearer ${process.env.GITHUB_ACCESS_TOKEN}`,
+                },
+            },
         );
+        const file = Bun.file("kdh.codes.tar");
+        const writer = file.writer();
+        writer.write(response.data);
 
-        const cwd = "kdh.codes/webkev";
+        mkdirSync("kdh.codes");
+        await tar.x({ f: "kdh.codes.tar", C: "kdh.codes" });
+
+        const cwd = `${__dirname}/kdh.codes/webkev`;
         logResult(await $`bun run build`.cwd(cwd));
 
         const s3Client = new S3Client({});
-        await s3Client.send(
-            new PutObjectCommand({
-                Bucket: process.env.BUCKET_NAME,
-                Key: "my-first-object.txt",
-                Body: "Hello JavaScript SDK!",
-            }),
-        );
+        const glob = new Glob("kdh.codes/webkev/dist/**/*");
+        for await (const filename of glob.scan(".")) {
+            const key = filename.split("/").slice(2).join("/"); // remove kdh.codes/webkev
+            const file = Bun.file(filename);
+            const fileContents = await file.arrayBuffer();
+            await s3Client.send(
+                new PutObjectCommand({
+                    Bucket: process.env.WEBKEV_BUCKET_NAME,
+                    Key: key,
+                    Body: new Uint8Array(fileContents),
+                }),
+            );
+        }
 
         return new Response("OK!", {
             status: 200,
