@@ -46,20 +46,20 @@ export default {
                 },
             },
         );
-        const file = Bun.file("kdh.codes.tar");
+        const file = Bun.file("/tmp/kdh.codes.tar");
         const writer = file.writer();
         writer.write(response.data);
 
-        mkdirSync("kdh.codes");
-        await tar.x({ f: "kdh.codes.tar", C: "kdh.codes" });
+        mkdirSync("/tmp/kdh.codes");
+        await tar.x({ f: "/tmp/kdh.codes.tar", C: "/tmp/kdh.codes" });
 
-        const cwd = `${__dirname}/kdh.codes/webkev`;
+        const cwd = `/tmp/kdh.codes/webkev`;
         logResult(await $`bun run build`.cwd(cwd));
 
         const s3Client = new S3Client({});
-        const glob = new Glob("kdh.codes/webkev/dist/**/*");
+        const glob = new Glob("/tmp/kdh.codes/webkev/dist/**/*");
         for await (const filename of glob.scan(".")) {
-            const key = filename.split("/").slice(2).join("/"); // remove kdh.codes/webkev
+            const key = filename.split("/").slice(4).join("/"); // remove /tmp/kdh.codes/webkev
             const file = Bun.file(filename);
             const fileContents = await file.arrayBuffer();
             await s3Client.send(

@@ -37,8 +37,8 @@ describe("compile-deploy-webkev:fetch", () => {
     });
 
     afterEach(() => {
-        unlinkSync("kdh.codes.tar");
-        rmSync("kdh.codes", { recursive: true });
+        unlinkSync("/tmp/kdh.codes.tar");
+        rmSync("/tmp/kdh.codes", { recursive: true });
     });
 
     it("downloads the repo", async () => {
@@ -64,7 +64,7 @@ describe("compile-deploy-webkev:fetch", () => {
         const request = new Request("https://cool.kdh.codes/lambda");
         const response = await compileDeployWebkev.fetch(request);
 
-        expect(await Bun.file("kdh.codes.tar").exists()).toBeTruthy();
+        expect(await Bun.file("/tmp/kdh.codes.tar").exists()).toBeTruthy();
         expect(response.status).toEqual(200);
     });
 
@@ -73,10 +73,10 @@ describe("compile-deploy-webkev:fetch", () => {
         const response = await compileDeployWebkev.fetch(request);
 
         expect(
-            await Bun.file("kdh.codes/webkev/index.ts").exists(),
+            await Bun.file("/tmp/kdh.codes/webkev/index.ts").exists(),
         ).toBeTruthy();
         expect(
-            await Bun.file("kdh.codes/webkev/package.json").exists(),
+            await Bun.file("/tmp/kdh.codes/webkev/package.json").exists(),
         ).toBeTruthy();
         expect(response.status).toEqual(200);
     });
@@ -86,7 +86,7 @@ describe("compile-deploy-webkev:fetch", () => {
         const response = await compileDeployWebkev.fetch(request);
 
         expect(
-            await Bun.file("kdh.codes/webkev/dist/index.js").exists(),
+            await Bun.file("/tmp/kdh.codes/webkev/dist/index.js").exists(),
         ).toBeTruthy();
         expect(response.status).toEqual(200);
     });
@@ -94,6 +94,7 @@ describe("compile-deploy-webkev:fetch", () => {
     it("uploads the built files to s3", async () => {
         const request = new Request("https://cool.kdh.codes/lambda");
         const response = await compileDeployWebkev.fetch(request);
+
         expect(PutObjectCommand).toHaveBeenCalledWith({
             Bucket: "foobar",
             Key: "dist/index.js",
