@@ -2,7 +2,7 @@ import * as pulumi from "@pulumi/pulumi";
 import * as aws from "@pulumi/aws";
 import * as awsx from "@pulumi/awsx";
 
-export const lambdaRole = new aws.iam.Role(
+export const compileDeployWebkevlambdaRole = new aws.iam.Role(
     "compile-deploy-webkev-lambda-role",
     {
         assumeRolePolicy: {

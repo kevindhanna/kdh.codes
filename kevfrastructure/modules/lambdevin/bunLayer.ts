@@ -1,6 +1,9 @@
+import * as pulumi from "@pulumi/pulumi";
+import * as aws from "@pulumi/aws";
+import * as awsx from "@pulumi/awsx";
+
 import { resolve } from "path";
 import { existsSync, rmdirSync } from "fs";
-import * as pulumi from "@pulumi/pulumi";
 import { bunBuildArgs } from "./variables";
 import { exec } from "../../helpers";
 
@@ -33,7 +36,7 @@ const { version, arch, archive } = bunBuildArgs.apply(({ tag, arch }) => {
     }
 
     exec(`bun install`, layerPath);
-    exec(`bun run build-layer --arch x64 --output ${resultPath}`, layerPath);
+    exec(`bun run build-layer --output ${resultPath}`, layerPath);
   }
   return {
     version: tag,
@@ -42,8 +45,14 @@ const { version, arch, archive } = bunBuildArgs.apply(({ tag, arch }) => {
   };
 });
 
-export default {
-  version,
-  arch,
-  archive,
-};
+export const bunLambdaLayer = new aws.lambda.LayerVersion("bun-lambda-layer", {
+  layerName: pulumi.concat(
+    version.apply((v) => v.replace(/\./g, "-")),
+    "-",
+    arch,
+    "-",
+    "lambda-layer",
+  ),
+  code: archive,
+  compatibleArchitectures: ["arm64"],
+});
