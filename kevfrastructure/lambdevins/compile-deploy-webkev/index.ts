@@ -11,6 +11,10 @@ const logResult = ({ stdout, stderr }: ShellOutput) => {
     console.error(stderr.toString());
 };
 
+export const tarFile = "/tmp/kdh.codes.tar";
+export const outputDir = "/tmp/kdh.codes";
+const repoFolderRegexp = /kevindhanna-kdh\.codes-.+/;
+
 export default {
     async fetch(trigger: Request): Promise<Response> {
         if (process.env.GITHUB_ACCESS_TOKEN === undefined) {
@@ -48,22 +52,23 @@ export default {
                 },
             },
         );
-        const file = Bun.file("/tmp/kdh.codes.tar");
+
+        const file = Bun.file(tarFile);
         const writer = file.writer();
         writer.write(response.data);
 
-        if (!existsSync("/tmp/kdh.codes")) {
-            mkdirSync("/tmp/kdh.codes");
+        if (!existsSync(outputDir)) {
+            mkdirSync(outputDir);
         }
 
-        await tar.x({ f: "/tmp/kdh.codes.tar", C: "/tmp/kdh.codes" });
+        await tar.x({ f: tarFile, C: outputDir });
 
-        const parent = readdirSync("/tmp/kdh.codes").find((f) =>
-            /kevindhanna-kdh\.codes-.+/.test(f),
+        const parent = readdirSync(outputDir).find((f) =>
+            repoFolderRegexp.test(f),
         );
 
         if (!parent) {
-            console.error("No folders found in /tmp/kdh.codes");
+            console.error(`No folders found in ${outputDir}`);
             return new Response("OK!", {
                 status: 200,
                 headers: {
@@ -72,8 +77,8 @@ export default {
             });
         }
 
-        const webkevDir = resolve("/tmp/kdh.codes", parent, "webkev");
-        console.log(webkevDir);
+        const webkevDir = resolve(outputDir, parent, "webkev");
+
         logResult(await $`bun install`.cwd(webkevDir));
         const strictEnv = Object.entries(process.env)
             .filter<[string, string]>(([, val]) => val !== undefined)
@@ -84,9 +89,10 @@ export default {
         logResult(await $`bun run build`.cwd(webkevDir).env(strictEnv));
 
         const s3Client = new S3Client({});
-        const distGlob = new Glob("/tmp/kdh.codes/webkev/dist/**/*");
+        const distGlob = new Glob(webkevDir.concat("/dist/**/*"));
         for await (const filename of distGlob.scan(".")) {
-            const key = filename.split("/").slice(4).join("/"); // remove /tmp/kdh.codes/webkev
+            // remove /tmp/kdh.codes/kevindhanna-kdh.codes-<commit>/webkev/dist
+            const key = filename.split("/").slice(6).join("/");
             const file = Bun.file(filename);
             const fileContents = await file.arrayBuffer();
             await s3Client.send(
