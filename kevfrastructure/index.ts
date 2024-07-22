@@ -11,6 +11,7 @@ import {
     compileDeployWebkevCodeArchive,
     bunLambdaLayerArn,
     compileDeployWebkevSourceHash,
+    compileDeployWebkevLambdaRoleName,
 } from "./modules/lambdevin";
 import { compileDeployWebkevLambdaToken } from "./modules/github";
 import { compileDeployWebkevLambdaRoleArn } from "./modules/lambdevin";
@@ -75,8 +76,38 @@ const compileDeployWebkevLambda = new aws.lambda.Function(
             variables: {
                 GITHUB_ACCESS_TOKEN: compileDeployWebkevLambdaToken,
                 WEBKEV_BUCKET_NAME: webkevBucketName,
-                GIT_EXEC_PATH: "/opt/libexec/git-core",
             },
         },
     },
 );
+
+const compileDeployWebkevLogGroup = new aws.cloudwatch.LogGroup(
+    "compile-deploy-webkev-log-group",
+    {
+        name: pulumi.concat("/aws/lambda/", compileDeployWebkevLambda.name),
+        retentionInDays: 7,
+    },
+);
+const lambdaLogging = aws.iam.getPolicyDocument({
+    statements: [
+        {
+            effect: "Allow",
+            actions: [
+                "logs:CreateLogGroup",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents",
+            ],
+            resources: ["arn:aws:logs:*:*:*"],
+        },
+    ],
+});
+const lambdaLoggingPolicy = new aws.iam.Policy("lambda_logging", {
+    name: "lambda_logging",
+    path: "/",
+    description: "IAM policy for logging from a lambda",
+    policy: lambdaLogging.then((lambdaLogging) => lambdaLogging.json),
+});
+const lambdaLogs = new aws.iam.RolePolicyAttachment("lambda_logs", {
+    role: compileDeployWebkevLambdaRoleName,
+    policyArn: lambdaLoggingPolicy.arn,
+});

@@ -1,12 +1,14 @@
 import { $, Glob, type ShellOutput } from "bun";
-import { mkdirSync } from "fs";
+import { mkdirSync, existsSync, readdirSync } from "fs";
 import * as tar from "tar";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import { request } from "@octokit/request";
+import { resolve } from "path";
 
 const logResult = ({ stdout, stderr }: ShellOutput) => {
-    console.log(stdout);
-    console.error(stderr);
+    console.log();
+    console.log(stdout.toString());
+    console.error(stderr.toString());
 };
 
 export default {
@@ -50,15 +52,40 @@ export default {
         const writer = file.writer();
         writer.write(response.data);
 
-        mkdirSync("/tmp/kdh.codes");
+        if (!existsSync("/tmp/kdh.codes")) {
+            mkdirSync("/tmp/kdh.codes");
+        }
+
         await tar.x({ f: "/tmp/kdh.codes.tar", C: "/tmp/kdh.codes" });
 
-        const cwd = `/tmp/kdh.codes/webkev`;
-        logResult(await $`bun run build`.cwd(cwd));
+        const parent = readdirSync("/tmp/kdh.codes").find((f) =>
+            /kevindhanna-kdh\.codes-.+/.test(f),
+        );
+
+        if (!parent) {
+            console.error("No folders found in /tmp/kdh.codes");
+            return new Response("OK!", {
+                status: 200,
+                headers: {
+                    "Content-Type": "text/plain",
+                },
+            });
+        }
+
+        const webkevDir = resolve("/tmp/kdh.codes", parent, "webkev");
+        console.log(webkevDir);
+        logResult(await $`bun install`.cwd(webkevDir));
+        const strictEnv = Object.entries(process.env)
+            .filter<[string, string]>(([, val]) => val !== undefined)
+            .reduce<Record<string, string>>((result, [key, val]) => {
+                result[key] = val;
+                return result;
+            }, {});
+        logResult(await $`bun run build`.cwd(webkevDir).env(strictEnv));
 
         const s3Client = new S3Client({});
-        const glob = new Glob("/tmp/kdh.codes/webkev/dist/**/*");
-        for await (const filename of glob.scan(".")) {
+        const distGlob = new Glob("/tmp/kdh.codes/webkev/dist/**/*");
+        for await (const filename of distGlob.scan(".")) {
             const key = filename.split("/").slice(4).join("/"); // remove /tmp/kdh.codes/webkev
             const file = Bun.file(filename);
             const fileContents = await file.arrayBuffer();
