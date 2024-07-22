@@ -6,5 +6,8 @@ config:
   aws:region: eu-north-1
   aws:secretKey:
     secure: AAABAH4CQX03iY8EA2jDMHadHryvGxMM/cz4C1CATf6nZQFjPA/w7pPRY00Z4hNl4zHnceo69oVqjb5LFHtvVDgFJdgjHLpV
-  github:compile-deploy-webkev-lambda-token:
-    secure: AAABAFNu57yGmlcpZpLGFP8M58eTQyXjuSvQ9nUv+FZeXUhjkFVDLp56hwMXxfKULlNr1hhzxarADSZcI5VNVWHAjFVIgYMVv8nc/imkk3HV+B4qq3LeAq2IJyS1eRsEL4TuvxG6rPB+/dttwmNNLI8ShSm05n8Rk82HusE=
+  github:owner: kevindhanna
+  github:token:
+    secure: AAABAFg2QOAOrrPlqlVEQLrXAgeFgJoj2s1+S3v6XDwA6baFE3c124/3QSD00biV8qBCK0YHK9YIY2MbABzzvJN8eJXa06lpik2nWcxWF+WsZPuFY87wUI8FFamLqikyAp+6GS7CODDg5EE4C5FaG5XG1Qzlx1xUtxJSrGg=
+  webkev:compile-deploy-webkev-lambda-github-token:
+    secure: AAABAN4OpnrkdI0kZrGyPodwWIyG6daVLYRmdWKtnaHP7QoVD/XiXogRg9/HwJF1IPIJWcyc7//bfL8jUlTIGH8VqTgySvjxZi/50Z3UrLPH3XSO3hzTta+fUmbsbSW5PSEuTOP1ru83k9OUhodwYQt0ik2mj3CE7WoBq2o=
