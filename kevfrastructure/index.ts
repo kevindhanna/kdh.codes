@@ -65,7 +65,7 @@ const compileDeployWebkevLambda = new aws.lambda.Function(
     "compile-deploy-webkev",
     {
         code: compileDeployWebkevCodeArchive,
-        timeout: 15,
+        timeout: 30,
         handler: "handler.fetch",
         role: compileDeployWebkevLambdaRoleArn,
         architectures: ["arm64"],
