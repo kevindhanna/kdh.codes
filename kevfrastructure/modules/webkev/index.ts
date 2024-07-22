@@ -1,10 +1,7 @@
-import * as pulumi from "@pulumi/pulumi";
-import * as aws from "@pulumi/aws";
-import * as awsx from "@pulumi/awsx";
-
-import { webkevBucket } from "./s3";
-import { webkevCFDistribution } from "./cloudfront";
-
-export const webkevBucketArn = webkevBucket.arn;
-export const webkevBucketName = webkevBucket.id;
-export const webkevCFDistributionArn = webkevCFDistribution.arn;
+import "./apigateway";
+import "./bunLayer";
+import "./cloudfront";
+import "./cloudwatch";
+import "./iam";
+import "./lambda";
+import "./s3";

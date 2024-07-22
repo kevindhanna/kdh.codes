@@ -1,6 +1,4 @@
-import * as pulumi from "@pulumi/pulumi";
 import * as aws from "@pulumi/aws";
-import * as awsx from "@pulumi/awsx";
 
 export const webkevLogsBucket = new aws.s3.BucketV2("kdh-codes-webkev-logs", {
     bucket: "kdh-codes-webkev-logs",

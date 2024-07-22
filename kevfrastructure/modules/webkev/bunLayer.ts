@@ -1,11 +1,14 @@
-import * as pulumi from "@pulumi/pulumi";
 import * as aws from "@pulumi/aws";
-import * as awsx from "@pulumi/awsx";
+import * as pulumi from "@pulumi/pulumi";
 
-import { resolve } from "path";
 import { existsSync, rmdirSync } from "fs";
-import { bunBuildArgs } from "./variables";
+import { resolve } from "path";
 import { exec } from "../../helpers";
+
+export const bunBuildArgs = pulumi.output({
+  tag: "bun-v1.1.20",
+  arch: "aarch64",
+});
 
 const { version, arch, archive } = bunBuildArgs.apply(({ tag, arch }) => {
   const bunRepo = "https://github.com/oven-sh/bun";
