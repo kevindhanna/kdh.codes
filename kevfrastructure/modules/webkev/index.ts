@@ -1,7 +1,9 @@
-import "./apigateway";
 import "./bunLayer";
 import "./cloudfront";
 import "./cloudwatch";
 import "./iam";
-import "./lambda";
+import * as lambda from "./lambda";
 import "./s3";
+import "./github";
+
+export const compileDeployWebkevLambda = lambda.compileDeployWebkevLambda;
