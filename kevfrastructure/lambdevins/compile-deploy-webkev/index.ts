@@ -98,6 +98,7 @@ export default {
             // remove /tmp/kdh.codes/kevindhanna-kdh.codes-<commit>/webkev/dist
             const key = filename.split("/").slice(6).join("/");
             const file = Bun.file(filename);
+            file.type;
             const fileContents = await file.arrayBuffer();
             console.log("Uploading file", { filename });
             await s3Client.send(
@@ -105,6 +106,7 @@ export default {
                     Bucket: process.env.WEBKEV_BUCKET_NAME,
                     Key: key,
                     Body: new Uint8Array(fileContents),
+                    ContentType: file.type,
                 }),
             );
         }
