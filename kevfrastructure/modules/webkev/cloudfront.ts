@@ -20,9 +20,6 @@ export const webkevCFDistribution = new aws.cloudfront.Distribution(
             {
                 originId: webkevBucket.arn,
                 domainName: webkevBucket.bucketRegionalDomainName,
-                s3OriginConfig: {
-                    originAccessIdentity: "",
-                },
                 originAccessControlId: webkevCFOriginAccessControl.id,
             },
         ],

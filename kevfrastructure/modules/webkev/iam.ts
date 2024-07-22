@@ -42,8 +42,7 @@ export const lambdaLoggingPolicy = new aws.iam.Policy("lambda_logging", {
     description: "IAM policy for logging from a lambda",
     policy: lambdaLogging.then((lambdaLogging) => lambdaLogging.json),
 });
-
-const allowAccessFromCloudFront = aws.iam.getPolicyDocumentOutput({
+export const allowWebkevBucketAccess = aws.iam.getPolicyDocumentOutput({
     statements: [
         {
             sid: "AllowCloudFrontAccess",
@@ -69,7 +68,6 @@ const allowAccessFromCloudFront = aws.iam.getPolicyDocumentOutput({
                 pulumi.concat(webkevBucket.arn, "/*"),
             ],
             principals: [
-                // { type: "Service", identifiers: ["lambda.amazonaws.com"] },
                 {
                     type: "AWS",
                     identifiers: [compileDeployWebkevLambdaRole.arn],
@@ -79,10 +77,8 @@ const allowAccessFromCloudFront = aws.iam.getPolicyDocumentOutput({
         },
     ],
 });
-export const webkevBucketPolicy = new aws.s3.BucketPolicy(
-    "webkev-bucket-policy",
-    {
-        bucket: webkevBucket.id,
-        policy: allowAccessFromCloudFront.apply((policy) => policy.json),
-    },
-);
+
+const webkevBucketPolicy = new aws.s3.BucketPolicy("webkev-bucket-policy", {
+    bucket: webkevBucket.id,
+    policy: allowWebkevBucketAccess.apply((policy) => policy.json),
+});
