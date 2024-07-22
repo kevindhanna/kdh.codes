@@ -4,6 +4,7 @@ import * as tar from "tar";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import { request } from "@octokit/request";
 import { resolve } from "path";
+import events from "@octokit/webhooks-examples";
 
 const logResult = ({ stdout, stderr }: ShellOutput) => {
     console.log();
@@ -39,6 +40,8 @@ export default {
                 },
             });
         }
+        const body = JSON.parse(trigger.body?.toString() ?? "");
+        console.log("Processing webhook", { body });
 
         console.log("Getting repo");
         const response = await request(
@@ -100,7 +103,7 @@ export default {
             const file = Bun.file(filename);
             file.type;
             const fileContents = await file.arrayBuffer();
-            console.log("Uploading file", { filename });
+            console.log("Uploading file", { filename: `${key}/${file}` });
             await s3Client.send(
                 new PutObjectCommand({
                     Bucket: process.env.WEBKEV_BUCKET_NAME,
