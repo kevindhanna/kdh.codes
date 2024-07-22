@@ -40,6 +40,7 @@ export default {
             });
         }
 
+        console.log("Getting repo");
         const response = await request(
             "GET /repos/kevindhanna/kdh.codes/tarball/main",
             {
@@ -61,6 +62,7 @@ export default {
             mkdirSync(outputDir);
         }
 
+        console.log("Extracting tar");
         await tar.x({ f: tarFile, C: outputDir });
 
         const parent = readdirSync(outputDir).find((f) =>
@@ -79,6 +81,7 @@ export default {
 
         const webkevDir = resolve(outputDir, parent, "webkev");
 
+        console.log("Bun Install");
         logResult(await $`bun install`.cwd(webkevDir));
         const strictEnv = Object.entries(process.env)
             .filter<[string, string]>(([, val]) => val !== undefined)
@@ -86,6 +89,7 @@ export default {
                 result[key] = val;
                 return result;
             }, {});
+        console.log("Bun Build");
         logResult(await $`bun run build`.cwd(webkevDir).env(strictEnv));
 
         const s3Client = new S3Client({});
@@ -95,6 +99,7 @@ export default {
             const key = filename.split("/").slice(6).join("/");
             const file = Bun.file(filename);
             const fileContents = await file.arrayBuffer();
+            console.log("Uploading file", { filename });
             await s3Client.send(
                 new PutObjectCommand({
                     Bucket: process.env.WEBKEV_BUCKET_NAME,
