@@ -45,7 +45,7 @@ export const lambdaLoggingPolicy = new aws.iam.Policy("lambda_logging", {
 export const allowWebkevBucketAccess = aws.iam.getPolicyDocumentOutput({
     statements: [
         {
-            sid: "AllowCloudFrontAccess",
+            sid: "AllowWebkevReadAccess",
             effect: "Allow",
             resources: [pulumi.concat(webkevBucket.arn, "/*")],
             principals: [
@@ -61,7 +61,7 @@ export const allowWebkevBucketAccess = aws.iam.getPolicyDocumentOutput({
             actions: ["s3:GetObject*"],
         },
         {
-            sid: "AllowLambdaWriteAccess",
+            sid: "AllowWebkevWriteAccess",
             effect: "Allow",
             resources: [
                 webkevBucket.arn,

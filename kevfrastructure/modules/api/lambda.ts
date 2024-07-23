@@ -6,15 +6,9 @@ import { existsSync } from "fs";
 import { resolve } from "path";
 
 import { exec } from "../../helpers";
+import { compileDeployWebkevLambdaRoleArn, webkevBucketId } from "../webkev";
+import { kavpi } from "./apigateway";
 import { bunLambdaLayer } from "./bunLayer";
-import { compileDeployWebkevLambdaRole } from "./iam";
-import { webkevBucket } from "./s3";
-import {
-    kavpiId,
-    kavpiLambdasHttpMethod,
-    kavpiLambdasResourceId,
-    kavpiLambdasResourceSourceArn,
-} from "../api";
 
 const lambdaDir = resolve(__dirname, "../../lambdevins/compile-deploy-webkev");
 const version = pulumi.output(exec("git rev-parse HEAD", lambdaDir));
@@ -62,7 +56,7 @@ export const compileDeployWebkevLambda = new aws.lambda.Function(
         timeout: 60,
         memorySize: 256,
         handler: "handler.fetch",
-        role: compileDeployWebkevLambdaRole.arn,
+        role: compileDeployWebkevLambdaRoleArn,
         architectures: ["arm64"],
         layers: [bunLambdaLayer.arn],
         runtime: aws.lambda.Runtime.CustomAL2,
@@ -70,29 +64,25 @@ export const compileDeployWebkevLambda = new aws.lambda.Function(
         environment: {
             variables: {
                 GITHUB_ACCESS_TOKEN: compileDeployWebkevLambdaToken,
-                WEBKEV_BUCKET_NAME: webkevBucket.id,
+                WEBKEV_BUCKET_NAME: webkevBucketId,
             },
         },
     },
 );
-const apigwLambda = new aws.lambda.Permission("apigw_lambda", {
-    statementId: "AllowExecutionFromAPIGateway",
-    action: "lambda:InvokeFunction",
-    function: compileDeployWebkevLambda.name,
-    principal: "apigateway.amazonaws.com",
-    sourceArn: kavpiLambdasResourceSourceArn,
-});
 
-export const compileDeployWebkevLambdasIntegration =
-    new aws.apigateway.Integration(
-        "compile-deploy-webkev-trigger",
-        {
-            restApi: kavpiId,
-            resourceId: kavpiLambdasResourceId,
-            httpMethod: kavpiLambdasHttpMethod,
-            integrationHttpMethod: "POST",
-            type: "AWS_PROXY",
-            uri: compileDeployWebkevLambda.invokeArn,
-        },
-        { dependsOn: [compileDeployWebkevLambda] },
-    );
+const awsConfig = new pulumi.Config("aws");
+const region = awsConfig.require("region");
+
+// export const compileDeployWebkevLambdasIntegration =
+//     new aws.apigateway.Integration(
+//         "compile-deploy-webkev-trigger",
+//         {
+//             restApi: kavpi.id,
+//             resourceId: compileDeployWebkevResource.id,
+//             httpMethod: compileDeployWebkevMethod.httpMethod,
+//             integrationHttpMethod: "POST",
+//             type: "AWS_PROXY",
+//             uri: compileDeployWebkevLambda.invokeArn,
+//         },
+//         { dependsOn: [compileDeployWebkevLambda] },
+//     );
