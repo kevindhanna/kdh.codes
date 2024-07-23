@@ -40,8 +40,7 @@ export default {
                 },
             });
         }
-        const body = JSON.parse(trigger.body?.toString() ?? "");
-        console.log("Processing webhook", { body });
+        console.log("Processing webhook", { request: trigger });
 
         console.log("Getting repo");
         const response = await request(
