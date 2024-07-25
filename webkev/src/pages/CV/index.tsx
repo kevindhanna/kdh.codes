@@ -150,7 +150,7 @@ The final result was a local test suite that was actually usable and better refl
 	},
 ];
 
-export function Experience() {
+export function CV() {
 	const [lineNumbersRef, lines] = useFillLines();
 	return (
 		<div className={styles.container}>

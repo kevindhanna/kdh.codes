@@ -59,9 +59,9 @@ export function Navbar() {
       </a>
 
       <nav>
-        <NavLink name="History" icon={CodeIcon} path="/" />
-        <NavLink name="About me" icon={MagnifierIcon} path="/bio" />
-        <NavLink name="Contact me" icon={SpeakIcon} path="/contact" />
+        <NavLink name="About me" icon={MagnifierIcon} path="/" />
+        <NavLink name="History" icon={CodeIcon} path="/cv" />
+        <NavLink name="Let's talk" icon={SpeakIcon} path="/contact" />
         <ExternalLink
           name="github.com/kevindhanna"
           href="https://github.com/kevindhanna"

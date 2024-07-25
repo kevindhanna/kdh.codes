@@ -3,12 +3,14 @@ import { ChevronRightIcon } from "../Icon";
 import styles from "./style.module.css";
 
 const locationPathMap = {
-  "/": "experience",
-  bio: "bio",
+  "/cv": "cv",
+  "/": "about",
+  "/contact": "contact",
 };
 
 export const Breadcrumbs = () => {
   const location = useLocation();
+  console.log(location.path, "FART");
   return (
     <text class={styles.breadcrumbs}>
       kevin
