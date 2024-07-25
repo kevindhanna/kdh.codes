@@ -22,26 +22,6 @@ export const compileDeployWebkevLambdaRole = new aws.iam.Role(
     },
 );
 
-const lambdaLogging = aws.iam.getPolicyDocument({
-    statements: [
-        {
-            effect: "Allow",
-            actions: [
-                "logs:CreateLogGroup",
-                "logs:CreateLogStream",
-                "logs:PutLogEvents",
-            ],
-            resources: ["arn:aws:logs:*:*:*"],
-        },
-    ],
-});
-
-export const lambdaLoggingPolicy = new aws.iam.Policy("lambda_logging", {
-    name: "lambda_logging",
-    path: "/",
-    description: "IAM policy for logging from a lambda",
-    policy: lambdaLogging.then((lambdaLogging) => lambdaLogging.json),
-});
 export const allowWebkevBucketAccess = aws.iam.getPolicyDocumentOutput({
     statements: [
         {

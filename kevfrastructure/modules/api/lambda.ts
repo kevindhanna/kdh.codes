@@ -7,11 +7,10 @@ import { resolve } from "path";
 
 import { exec } from "../../helpers";
 import { compileDeployWebkevLambdaRoleArn, webkevBucketId } from "../webkev";
-import { kavpi } from "./apigateway";
 import { bunLambdaLayer } from "./bunLayer";
 
 const lambdaDir = resolve(__dirname, "../../lambdevins/compile-deploy-webkev");
-const version = pulumi.output(exec("git rev-parse HEAD", lambdaDir));
+const version = exec("git rev-parse HEAD", lambdaDir);
 const archivePath = resolve(
     __dirname,
     `../../artifacts/compile-deploy-webdev-${version}.zip`,
@@ -32,8 +31,8 @@ const compileDeployWebkev = () => {
     });
     return lambda;
 };
-
 let sourceCodeHashPromise: Promise<string>;
+
 let pulumiArchive = new pulumi.asset.FileArchive(archivePath);
 if (!existsSync(archivePath)) {
     sourceCodeHashPromise = compileDeployWebkev().then(
@@ -53,8 +52,8 @@ export const compileDeployWebkevLambda = new aws.lambda.Function(
     "compile-deploy-webkev",
     {
         code: pulumiArchive,
-        timeout: 60,
-        memorySize: 256,
+        timeout: 120,
+        memorySize: 512,
         handler: "handler.fetch",
         role: compileDeployWebkevLambdaRoleArn,
         architectures: ["arm64"],
@@ -69,20 +68,3 @@ export const compileDeployWebkevLambda = new aws.lambda.Function(
         },
     },
 );
-
-const awsConfig = new pulumi.Config("aws");
-const region = awsConfig.require("region");
-
-// export const compileDeployWebkevLambdasIntegration =
-//     new aws.apigateway.Integration(
-//         "compile-deploy-webkev-trigger",
-//         {
-//             restApi: kavpi.id,
-//             resourceId: compileDeployWebkevResource.id,
-//             httpMethod: compileDeployWebkevMethod.httpMethod,
-//             integrationHttpMethod: "POST",
-//             type: "AWS_PROXY",
-//             uri: compileDeployWebkevLambda.invokeArn,
-//         },
-//         { dependsOn: [compileDeployWebkevLambda] },
-//     );

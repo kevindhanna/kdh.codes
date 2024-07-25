@@ -1,11 +1,11 @@
 import * as aws from "@pulumi/aws";
 import * as pulumi from "@pulumi/pulumi";
-import { cloudwatchRole } from "./iam";
 import { compileDeployWebkevLambda } from "./lambda";
-import { compileDeployWebkevLogGroup } from "./cloudwatch";
+import { kavpiLogGroup } from "./cloudwatch";
 
+export const kavpiName = "Kavpi";
 export const kavpi = new aws.apigatewayv2.Api("kavpi", {
-    name: "Kavpi",
+    name: kavpiName,
     protocolType: "HTTP",
     corsConfiguration: {
         allowOrigins: ["*"],
@@ -36,7 +36,7 @@ export const compileDeployWebkevRoute = new aws.apigatewayv2.Route(
 
 export const kavpiProdStage = new aws.apigatewayv2.Stage("kavpie-prod-stage", {
     accessLogSettings: {
-        destinationArn: compileDeployWebkevLogGroup.arn,
+        destinationArn: kavpiLogGroup.arn,
         format: '{ "requestId":"$context.requestId", "extendedRequestId":"$context.extendedRequestId","ip": "$context.identity.sourceIp", "caller":"$context.identity.caller", "user":"$context.identity.user", "requestTime":"$context.requestTime", "httpMethod":"$context.httpMethod", "resourcePath":"$context.resourcePath", "status":"$context.status", "protocol":"$context.protocol", "responseLength":"$context.responseLength" }',
     },
     apiId: kavpi.id,
@@ -50,57 +50,4 @@ const apigwLambda = new aws.lambda.Permission("apigw_lambda", {
     function: compileDeployWebkevLambda,
     principal: "apigateway.amazonaws.com",
     sourceArn: pulumi.interpolate`${kavpi.executionArn}/*/*`,
-    // sourceArn: pulumi.interpolate`arn:aws:execute-api:${region}:${awsAccountId}:${kavpi.id}/*/${compileDeployWebkevMethod.httpMethod}/${compileDeployWebkevResource.path}`,
 });
-
-// export const compileDeployWebkevResource = new aws.apigateway.Resource(
-//     "compile-deploy-webkev-resource",
-//     {
-//         pathPart: "compile-deploy-webkev",
-//         parentId: kavpi.rootResourceId,
-//         restApi: kavpi.id,
-//     },
-// );
-
-// export const compileDeployWebkevMethod = new aws.apigateway.Method(
-//     "compile-deploy-webkev-method",
-//     {
-//         restApi: kavpi.id,
-//         resourceId: compileDeployWebkevResource.id,
-//         httpMethod: "POST",
-//         authorization: "NONE",
-//     },
-// );
-
-// const kavpiProdStageName = "prod";
-// const kavpiLogGroup = new aws.cloudwatch.LogGroup("kavpi-prod-log-group", {
-//     name: pulumi.interpolate`API-Gateway-Execution-Logs_${kavpi.id}/${kavpiProdStageName}`,
-//     retentionInDays: 7,
-// });
-// const kavpiAccount = new aws.apigateway.Account("kavpi-account", {
-//     cloudwatchRoleArn: cloudwatchRole.arn,
-// });
-
-// const kavpiDeployment = new aws.apigateway.Deployment(
-//     "kavpi-prod-deployment",
-//     {
-//         restApi: kavpi.id,
-//     },
-//     { dependsOn: [compileDeployWebkevMethod, compileDeployWebkevResource] },
-// );
-
-// export const kavpiProdStage = new aws.apigateway.Stage(
-//     "kavpi-prod",
-//     {
-//         stageName: kavpiProdStageName,
-//         deployment: kavpiDeployment.id,
-//         restApi: kavpi.id,
-//         accessLogSettings: {
-//             destinationArn: kavpiLogGroup.arn,
-//             format: '$context.identity.sourceIp $context.identity.caller $context.identity.user [$context.requestTime]"$context.httpMethod $context.resourcePath $context.protocol" $context.status $context.responseLength $context.requestId $context.extendedRequestId',
-//         },
-//     },
-//     {
-//         dependsOn: [kavpiLogGroup, kavpiAccount],
-//     },
-// );

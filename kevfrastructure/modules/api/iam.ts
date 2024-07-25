@@ -1,24 +1,6 @@
 import * as aws from "@pulumi/aws";
 import { compileDeployWebkevLambdaRole } from "../webkev/iam";
 
-// const lambdaAssumeRole = aws.iam.getPolicyDocument({
-//     statements: [
-//         {
-//             effect: "Allow",
-//             principals: [
-//                 {
-//                     type: "Service",
-//                     identifiers: ["lambda.amazonaws.com"],
-//                 },
-//             ],
-//             actions: ["sts:AssumeRole"],
-//         },
-//     ],
-// });
-// export const lambdaRole = new aws.iam.Role("lambda-role", {
-//     name: "lambda-role",
-//     assumeRolePolicy: lambdaAssumeRole.then((policy) => policy.json),
-// });
 const lambdaRoleAttachment = new aws.iam.RolePolicyAttachment(
     "lambda-role-attachment",
     {

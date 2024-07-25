@@ -1,6 +1,8 @@
 import * as aws from "@pulumi/aws";
 
 import { webkevBucket, webkevLogsBucket } from "./s3";
+import { kdhCodesCertificate } from "./acm";
+import { kdhCodesDnsZone } from "../core";
 
 const webkevCFOriginAccessControl = new aws.cloudfront.OriginAccessControl(
     "webkev-cloudfront-origin-access-control",
@@ -23,6 +25,7 @@ export const webkevCFDistribution = new aws.cloudfront.Distribution(
                 originAccessControlId: webkevCFOriginAccessControl.id,
             },
         ],
+        aliases: [kdhCodesDnsZone.then((zone) => zone.name)],
         enabled: true,
         defaultRootObject: "index.html",
         defaultCacheBehavior: {
@@ -48,7 +51,8 @@ export const webkevCFDistribution = new aws.cloudfront.Distribution(
             prefix: "cloudfront/",
         },
         viewerCertificate: {
-            cloudfrontDefaultCertificate: true,
+            acmCertificateArn: kdhCodesCertificate.arn,
+            sslSupportMethod: "sni-only",
         },
         restrictions: {
             geoRestriction: {
