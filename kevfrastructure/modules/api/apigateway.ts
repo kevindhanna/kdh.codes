@@ -11,7 +11,8 @@ export const kavpi = new aws.apigatewayv2.Api("kavpi", {
         allowOrigins: ["*"],
         allowMethods: ["OPTIONS", "POST"],
     },
-    disableExecuteApiEndpoint: true,
+    // TODO: Why doesn't the custom domain cert work?
+    // disableExecuteApiEndpoint: true,
 });
 
 const compileDeployWebkevIntegration = new aws.apigatewayv2.Integration(
