@@ -6,7 +6,11 @@ import { existsSync } from "fs";
 import { resolve } from "path";
 
 import { exec } from "../../helpers";
-import { compileDeployWebkevLambdaRoleArn, webkevBucketId } from "../webkev";
+import {
+    compileDeployWebkevLambdaRoleArn,
+    webkevBucketId,
+    webkevCFDistributionId,
+} from "../webkev";
 import { bunLambdaLayer } from "./bunLayer";
 
 const lambdaDir = resolve(__dirname, "../../lambdevins/compile-deploy-webkev");
@@ -66,6 +70,7 @@ export const compileDeployWebkevLambda = new aws.lambda.Function(
             variables: {
                 GITHUB_ACCESS_TOKEN: compileDeployWebkevLambdaToken,
                 WEBKEV_BUCKET_NAME: webkevBucketId,
+                CLOUDFRONT_DISTRIBUTION_ID: webkevCFDistributionId,
             },
         },
     },
