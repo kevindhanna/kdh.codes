@@ -1,18 +1,8 @@
 import * as cloudflare from "@pulumi/cloudflare";
 import * as aws from "@pulumi/aws";
-import * as pulumi from "@pulumi/pulumi";
 
-import { kdhCodesDnsZone, awsAccountId } from "../core";
+import { kdhCodesDnsZone, usEast1Provider } from "../core";
 
-const awsConfig = new pulumi.Config("aws");
-const awsAccessKey = awsConfig.require("accessKey");
-const awsSecretKey = awsConfig.require("secretKey");
-const usEast1Provider = new aws.Provider("aws-us-east-1-provider", {
-    region: "us-east-1",
-    accessKey: awsAccessKey,
-    secretKey: awsSecretKey,
-    allowedAccountIds: [awsAccountId],
-});
 export const kdhCodesCertificate = new aws.acm.Certificate(
     "kdh-codes-certificate",
     {
