@@ -8,10 +8,11 @@ import {
 
 import { Navbar } from "./components/Navbar";
 import { CV } from "./pages/CV";
-import { NotFound } from "./pages/_404.jsx";
+import { NotFound } from "./pages/_404";
 import "./style.css";
 import { ThemeProvider } from "./components/ThemeProvider";
 import { About } from "./pages/About";
+import { Contact } from "./pages/Contact";
 
 export function App() {
   return (
@@ -23,7 +24,7 @@ export function App() {
             <div className="bodyContent">
               <Router>
                 <Route path="/" component={About} />
-                <Route path="/contact" component={About} />
+                <Route path="/contact" component={Contact} />
                 <Route path="/cv" component={CV} />
                 <Route default component={NotFound} />
               </Router>

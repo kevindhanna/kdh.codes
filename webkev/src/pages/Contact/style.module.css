@@ -1,4 +1,49 @@
+button {
+	width: fit-content;
+	padding: 0.5em 2em 0.5em 2em;
+	border: 1px solid var(--main-text-colour);
+	border-radius: 0.5em;
+}
+
 .content {
 	max-width: 800px;
+	padding: 0 1em 1em 1em;
+}
+
+.form {
 	padding: 1em;
+	display: flex;
+	flex-direction: column;
+	gap: 1em;
+}
+
+.inputContainer {
+	display: flex;
+	flex-direction: column;
+}
+
+.textInput {
+	max-width: 400px;
+	padding: 10px;
+}
+
+input,
+textarea {
+	padding: 10px;
+	border-radius: 0.5em;
+	border: 1px solid var(--main-text-colour);
+}
+
+.radioGroup {
+	border: 1px solid var(--main-text-colour);
+	border-radius: 0.5em;
+	width: fit-content;
+	padding: 0.3em 1em 1em 1em;
+}
+.radioOption {
+	display: flex;
+	gap: 0.5em;
+}
+.radio {
+	width: fit-content;
 }
