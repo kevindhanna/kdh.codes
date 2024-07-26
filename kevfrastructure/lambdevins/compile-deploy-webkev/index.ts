@@ -6,12 +6,13 @@ import {
     CloudFrontClient,
     CreateInvalidationCommand,
 } from "@aws-sdk/client-cloudfront";
-import { request } from "@octokit/request";
+import { request as octokitRequest } from "@octokit/request";
 import { resolve } from "path";
 import { v6 as uuid } from "uuid";
+import { validateGithubSignature } from "./src/validateGithubSignature";
+import { validateRequestBody } from "./src/validators/validateRequest";
 
 const logResult = ({ stdout, stderr }: ShellOutput) => {
-    console.log();
     console.log(stdout.toString());
     console.error(stderr.toString());
 };
@@ -19,47 +20,35 @@ const logResult = ({ stdout, stderr }: ShellOutput) => {
 export const tarFile = "/tmp/kdh.codes.tar";
 export const outputDir = "/tmp/kdh.codes";
 const repoFolderRegexp = /kevindhanna-kdh\.codes-.+/;
-
+const requiredEnv = [
+    "GITHUB_ACCESS_TOKEN",
+    "GITHUB_WEBHOOK_SECRET",
+    "WEBKEV_BUCKET_NAME",
+    "CLOUDFRONT_DISTRIBUTION_ID",
+];
 export default {
-    async fetch(trigger: Request): Promise<Response> {
-        if (process.env.GITHUB_ACCESS_TOKEN === undefined) {
-            console.error(
-                "Missing required environment variable GITHUB_ACCESS_TOKEN",
-            );
-            return new Response("OK!", {
-                status: 200,
-                headers: {
-                    "Content-Type": "text/plain",
-                },
-            });
-        }
-        if (process.env.WEBKEV_BUCKET_NAME === undefined) {
-            console.error(
-                "Missing required environment variable WEBKEV_BUCKET_NAME",
-            );
-            return new Response("OK!", {
-                status: 200,
-                headers: {
-                    "Content-Type": "text/plain",
-                },
-            });
+    async fetch(request: Request): Promise<Response> {
+        for (const key of requiredEnv) {
+            if (process.env[key] === undefined) {
+                console.error(`Missing required environment variable ${key}`);
+                return new Response("OK!", {
+                    status: 200,
+                    headers: {
+                        "Content-Type": "text/plain",
+                    },
+                });
+            }
         }
 
-        if (process.env.CLOUDFRONT_DISTRIBUTION_ID === undefined) {
-            console.error(
-                "Missing required environment variable CLOUDFRONT_DISTRIBUTION_ID",
-            );
-            return new Response("OK!", {
-                status: 200,
-                headers: {
-                    "Content-Type": "text/plain",
-                },
-            });
+        const [body, invalidResponse] = await validateRequestBody(request);
+        if (invalidResponse) {
+            return invalidResponse;
         }
-        console.log("Processing webhook", { request: trigger });
+
+        console.log("Processing webhook", { request: body });
 
         console.log("Getting repo");
-        const response = await request(
+        const response = await octokitRequest(
             "GET /repos/kevindhanna/kdh.codes/tarball/main",
             {
                 owner: "kevindhanna",

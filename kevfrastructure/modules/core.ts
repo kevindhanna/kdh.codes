@@ -14,8 +14,8 @@ export const kdhCodesDnsZone = cloudflare.getZone({
 });
 
 const awsConfig = new pulumi.Config("aws");
-const awsAccessKey = awsConfig.require("accessKey");
-const awsSecretKey = awsConfig.require("secretKey");
+const awsAccessKey = awsConfig.requireSecret("accessKey");
+const awsSecretKey = awsConfig.requireSecret("secretKey");
 export const usEast1Provider = new aws.Provider("aws-us-east-1-provider", {
     region: "us-east-1",
     accessKey: awsAccessKey,

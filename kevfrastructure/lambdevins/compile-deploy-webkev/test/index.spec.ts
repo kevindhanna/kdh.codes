@@ -9,7 +9,9 @@ import {
 } from "bun:test";
 
 import compileDeployWebkev, { outputDir, tarFile } from "../";
-import { unlinkSync, rmSync } from "fs";
+import { unlinkSync, rmSync, existsSync } from "fs";
+import { type Hmac, createHmac } from "crypto";
+import testPayload from "./test-payload.json";
 
 describe("compile-deploy-webkev:fetch", () => {
     let responseData: ArrayBuffer;
@@ -24,10 +26,14 @@ describe("compile-deploy-webkev:fetch", () => {
     const getWorkingFilePath = (path: string) =>
         `${outputDir}/${headDir}/${path}`;
 
+    let requestBody: string;
+    let validRequestSignature: Hmac;
+
     beforeEach(async () => {
         const file = Bun.file("test/test-tarball.tar");
         responseData = await file.arrayBuffer();
         process.env.GITHUB_ACCESS_TOKEN = "some-token";
+        process.env.GITHUB_WEBHOOK_SECRET = "some-secret";
         process.env.WEBKEV_BUCKET_NAME = "foobar";
         process.env.CLOUDFRONT_DISTRIBUTION_ID = "barfoo";
 
@@ -53,16 +59,59 @@ describe("compile-deploy-webkev:fetch", () => {
         mock.module("uuid", () => ({
             v6: mock(() => "<some-uuid>"),
         }));
+
+        requestBody = JSON.stringify(testPayload);
+        validRequestSignature = createHmac(
+            "sha256",
+            process.env.GITHUB_WEBHOOK_SECRET,
+        );
+        validRequestSignature.update(requestBody);
     });
 
     afterEach(() => {
-        unlinkSync(tarFile);
-        rmSync(outputDir, { recursive: true });
+        if (existsSync(tarFile)) {
+            unlinkSync(tarFile);
+        }
+        if (existsSync(outputDir)) {
+            rmSync(outputDir, { recursive: true });
+        }
+    });
+
+    const buildWebhookRequest = (signature?: string) => {
+        return new Request("https://cool.kdh.codes/lambda", {
+            headers: {
+                Accept: "*/*",
+                "Content-Type": "application/json",
+                "User-Agent": "GitHub-Hookshot/7d42ae9",
+                "X-GitHub-Delivery": "52cb71be-4b5c-11ef-8034-fafd7653fb94",
+                "X-GitHub-Event": "push",
+                "X-GitHub-Hook-ID": "492332293",
+                "X-GitHub-Hook-Installation-Target-ID": "828022247",
+                "X-GitHub-Hook-Installation-Target-Type": "repository",
+                HTTP_X_HUB_SIGNATURE_256:
+                    "sha256=" +
+                    (signature ?? validRequestSignature.digest("hex")),
+            },
+            body: requestBody,
+        });
+    };
+
+    it("returns 401 for invalid signature", async () => {
+        const response = await compileDeployWebkev.fetch(
+            buildWebhookRequest("invalid signature"),
+        );
+
+        expect(response.status).toEqual(401);
+    });
+
+    it("returns 200 for valid signature", async () => {
+        const response = await compileDeployWebkev.fetch(buildWebhookRequest());
+
+        expect(response.status).toEqual(200);
     });
 
     it("downloads the repo", async () => {
-        const request = new Request("https://cool.kdh.codes/lambda");
-        const response = await compileDeployWebkev.fetch(request);
+        const response = await compileDeployWebkev.fetch(buildWebhookRequest());
 
         expect(requestMock).toHaveBeenCalledWith(
             "GET /repos/kevindhanna/kdh.codes/tarball/main",
@@ -80,16 +129,14 @@ describe("compile-deploy-webkev:fetch", () => {
     });
 
     it("saves the file", async () => {
-        const request = new Request("https://cool.kdh.codes/lambda");
-        const response = await compileDeployWebkev.fetch(request);
+        const response = await compileDeployWebkev.fetch(buildWebhookRequest());
 
         expect(await Bun.file(tarFile).exists()).toBeTruthy();
         expect(response.status).toEqual(200);
     });
 
     it("extracts the tar contents", async () => {
-        const request = new Request("https://cool.kdh.codes/lambda");
-        const response = await compileDeployWebkev.fetch(request);
+        const response = await compileDeployWebkev.fetch(buildWebhookRequest());
 
         expect(
             await Bun.file(getWorkingFilePath("/webkev/index.ts")).exists(),
@@ -101,8 +148,7 @@ describe("compile-deploy-webkev:fetch", () => {
     });
 
     it("builds the contents", async () => {
-        const request = new Request("https://cool.kdh.codes/lambda");
-        const response = await compileDeployWebkev.fetch(request);
+        const response = await compileDeployWebkev.fetch(buildWebhookRequest());
 
         expect(
             await Bun.file(
@@ -113,9 +159,8 @@ describe("compile-deploy-webkev:fetch", () => {
     });
 
     it("uploads the built files to s3", async () => {
-        const request = new Request("https://cool.kdh.codes/lambda");
-        const response = await compileDeployWebkev.fetch(request);
-        console.log(PutObjectCommand.mock.calls);
+        const response = await compileDeployWebkev.fetch(buildWebhookRequest());
+
         expect(PutObjectCommand).toHaveBeenCalledWith({
             Bucket: "foobar",
             Key: "index.js",
@@ -134,8 +179,8 @@ describe("compile-deploy-webkev:fetch", () => {
     });
 
     it("invalidates the cloudfront cache", async () => {
-        const request = new Request("https://cool.kdh.codes/lambda");
-        const response = await compileDeployWebkev.fetch(request);
+        const response = await compileDeployWebkev.fetch(buildWebhookRequest());
+
         expect(CreateInvalidationCommand).toHaveBeenCalledWith({
             DistributionId: process.env.CLOUDFRONT_DISTRIBUTION_ID,
             InvalidationBatch: {

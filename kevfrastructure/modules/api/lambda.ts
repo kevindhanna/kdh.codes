@@ -12,6 +12,7 @@ import {
     webkevCFDistributionId,
 } from "../webkev";
 import { bunLambdaLayer } from "./bunLayer";
+import { webhookSecret } from "./github";
 
 const lambdaDir = resolve(__dirname, "../../lambdevins/compile-deploy-webkev");
 // const version = exec("git rev-parse HEAD", lambdaDir);
@@ -50,7 +51,7 @@ const result = version.apply((version) => {
 });
 
 const webkevConfig = new pulumi.Config("webkev");
-const compileDeployWebkevLambdaToken = webkevConfig.require(
+const compileDeployWebkevLambdaToken = webkevConfig.requireSecret(
     "compile-deploy-webkev-lambda-github-token",
 );
 
@@ -69,6 +70,7 @@ export const compileDeployWebkevLambda = new aws.lambda.Function(
         environment: {
             variables: {
                 GITHUB_ACCESS_TOKEN: compileDeployWebkevLambdaToken,
+                GITHUB_WEBHOOK_SECRET: webhookSecret.result,
                 WEBKEV_BUCKET_NAME: webkevBucketId,
                 CLOUDFRONT_DISTRIBUTION_ID: webkevCFDistributionId,
             },
