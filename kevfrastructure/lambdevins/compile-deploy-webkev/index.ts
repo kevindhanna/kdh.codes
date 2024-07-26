@@ -2,9 +2,13 @@ import { $, Glob, type ShellOutput } from "bun";
 import { mkdirSync, existsSync, readdirSync } from "fs";
 import * as tar from "tar";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import {
+    CloudFrontClient,
+    CreateInvalidationCommand,
+} from "@aws-sdk/client-cloudfront";
 import { request } from "@octokit/request";
 import { resolve } from "path";
-import events from "@octokit/webhooks-examples";
+import { v6 as uuid } from "uuid";
 
 const logResult = ({ stdout, stderr }: ShellOutput) => {
     console.log();
@@ -32,6 +36,18 @@ export default {
         if (process.env.WEBKEV_BUCKET_NAME === undefined) {
             console.error(
                 "Missing required environment variable WEBKEV_BUCKET_NAME",
+            );
+            return new Response("OK!", {
+                status: 200,
+                headers: {
+                    "Content-Type": "text/plain",
+                },
+            });
+        }
+
+        if (process.env.CLOUDFRONT_DISTRIBUTION_ID === undefined) {
+            console.error(
+                "Missing required environment variable CLOUDFRONT_DISTRIBUTION_ID",
             );
             return new Response("OK!", {
                 status: 200,
@@ -112,6 +128,19 @@ export default {
                 }),
             );
         }
+
+        const cloudfrontClient = new CloudFrontClient({});
+        const command = new CreateInvalidationCommand({
+            DistributionId: process.env.CLOUDFRONT_DISTRIBUTION_ID, // required
+            InvalidationBatch: {
+                Paths: {
+                    Quantity: 1,
+                    Items: ["/*"],
+                },
+                CallerReference: uuid(), // required
+            },
+        });
+        await cloudfrontClient.send(command);
 
         return new Response("OK!", {
             status: 200,

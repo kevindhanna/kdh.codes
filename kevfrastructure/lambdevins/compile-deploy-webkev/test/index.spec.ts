@@ -15,6 +15,8 @@ describe("compile-deploy-webkev:fetch", () => {
     let responseData: ArrayBuffer;
     let s3Client: { send: Mock<() => void> };
     let PutObjectCommand: Mock<() => string>;
+    let cloudFrontClient: { send: Mock<() => void> };
+    let CreateInvalidationCommand: Mock<() => string>;
     let requestMock: Mock<() => { data: ArrayBuffer }>;
     // the top level directory in the test-tarball.tar, matches what we get from github
     const headDir =
@@ -23,21 +25,33 @@ describe("compile-deploy-webkev:fetch", () => {
         `${outputDir}/${headDir}/${path}`;
 
     beforeEach(async () => {
-        s3Client = { send: mock(() => {}) };
-        PutObjectCommand = mock(() => "<putObjectCommand>");
-        requestMock = mock(() => ({
-            data: responseData,
-        }));
         const file = Bun.file("test/test-tarball.tar");
         responseData = await file.arrayBuffer();
         process.env.GITHUB_ACCESS_TOKEN = "some-token";
         process.env.WEBKEV_BUCKET_NAME = "foobar";
+        process.env.CLOUDFRONT_DISTRIBUTION_ID = "barfoo";
+
+        s3Client = { send: mock(() => {}) };
+        cloudFrontClient = { send: mock(() => {}) };
+        PutObjectCommand = mock(() => "<putObjectCommand>");
+        CreateInvalidationCommand = mock(() => "<createInvalidationCommand>");
+        requestMock = mock(() => ({
+            data: responseData,
+        }));
+
         mock.module("@octokit/request", () => ({
             request: requestMock,
         }));
         mock.module("@aws-sdk/client-s3", () => ({
             S3Client: mock(() => s3Client),
             PutObjectCommand,
+        }));
+        mock.module("@aws-sdk/client-cloudfront", () => ({
+            CloudFrontClient: mock(() => cloudFrontClient),
+            CreateInvalidationCommand,
+        }));
+        mock.module("uuid", () => ({
+            v6: mock(() => "<some-uuid>"),
         }));
     });
 
@@ -101,16 +115,39 @@ describe("compile-deploy-webkev:fetch", () => {
     it("uploads the built files to s3", async () => {
         const request = new Request("https://cool.kdh.codes/lambda");
         const response = await compileDeployWebkev.fetch(request);
+        console.log(PutObjectCommand.mock.calls);
         expect(PutObjectCommand).toHaveBeenCalledWith({
             Bucket: "foobar",
             Key: "index.js",
             Body: expect.any(Uint8Array),
+            ContentType: expect.any(String),
         });
         expect(PutObjectCommand).toHaveBeenCalledWith({
             Bucket: "foobar",
             Key: "public/site.webmanifest",
             Body: expect.any(Uint8Array),
+            ContentType: expect.any(String),
         });
+        expect(s3Client.send).toHaveBeenCalledTimes(2);
+
+        expect(response.status).toEqual(200);
+    });
+
+    it("invalidates the cloudfront cache", async () => {
+        const request = new Request("https://cool.kdh.codes/lambda");
+        const response = await compileDeployWebkev.fetch(request);
+        expect(CreateInvalidationCommand).toHaveBeenCalledWith({
+            DistributionId: process.env.CLOUDFRONT_DISTRIBUTION_ID,
+            InvalidationBatch: {
+                Paths: {
+                    Quantity: 1,
+                    Items: ["/*"],
+                },
+                CallerReference: "<some-uuid>", // required
+            },
+        });
+
+        expect(cloudFrontClient.send).toHaveBeenCalled();
 
         expect(response.status).toEqual(200);
     });

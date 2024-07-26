@@ -1,4 +1,4 @@
-# compile-deploy
+# compile-deploy-webkev
 
 To install dependencies:
 
