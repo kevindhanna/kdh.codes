@@ -129,9 +129,10 @@ export default {
             );
         }
 
+        console.log("Invalidating cache");
         const cloudfrontClient = new CloudFrontClient({});
         const command = new CreateInvalidationCommand({
-            DistributionId: process.env.CLOUDFRONT_DISTRIBUTION_ID, // required
+            DistributionId: process.env.CLOUDFRONT_DISTRIBUTION_ID,
             InvalidationBatch: {
                 Paths: {
                     Quantity: 1,
