@@ -6,13 +6,21 @@ export const Contact = () => {
     <div>
       <Breadcrumbs />
       <section className={styles.content}>
-        Is it wise to put an unsecured form on the internet that allows random
-        people to just send me messages? Smells like a fun way to get a lot of
-        bullshit sent to my inbox and a £10,000 SAAS bill.
-        <br />
-        <br />
-        Anyway, here's the form.
-        <form class={styles.form}>
+        <h1>
+          This site is under construction, so I haven't figure out how I want to
+          send these messages to myself yet, sorry! Feel free to message me on
+          LinkedIn for now.
+        </h1>
+        <s>
+          Is it wise to put an unsecured form on the internet that allows random
+          people to just send me messages? Smells like a fun way to get a lot of
+          bullshit sent to my inbox and a £10,000 SAAS bill.
+          <br />
+          <br />
+          Anyway, here's the form.
+          <br />
+        </s>
+        <form disabled class={styles.form}>
           <div class={styles.inputContainer}>
             <label for="name" hidden>
               name
