@@ -41,6 +41,22 @@ export const allowWebkevBucketAccess = aws.iam.getPolicyDocumentOutput({
             actions: ["s3:GetObject*"],
         },
         {
+            sid: "AllowWebkevListAccess",
+            effect: "Allow",
+            resources: [webkevBucket.arn],
+            principals: [
+                { type: "Service", identifiers: ["cloudfront.amazonaws.com"] },
+            ],
+            conditions: [
+                {
+                    test: "StringEquals",
+                    values: [webkevCFDistribution.arn],
+                    variable: "AWS:SourceArn",
+                },
+            ],
+            actions: ["s3:ListBucket"],
+        },
+        {
             sid: "AllowWebkevWriteAccess",
             effect: "Allow",
             resources: [
