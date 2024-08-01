@@ -1,2 +1,2 @@
 export * from "./compileDeployWebkev";
-import "./contactWebkev";
+export * from "./contactWebkev";

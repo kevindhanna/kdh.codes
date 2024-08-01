@@ -6,7 +6,7 @@ import { existsSync } from "fs";
 
 import { exec } from "../../../helpers";
 import { bunLambdaLayer } from "./bunLayer";
-import { contactWebkevMeMessageTopic } from "../sns";
+import { contactWebkevMessageTopic } from "../sns";
 import { contactWebkevLambdaRole } from "../iam";
 
 const lambdaDir = resolve(__dirname, "../../../lambdevins/contact-webkev");
@@ -30,19 +30,22 @@ const zip = archive.getFile({
 });
 const pulumiArchive = new pulumi.asset.FileArchive(archivePath);
 
-const contactWebkevLambda = new aws.lambda.Function("contact-webkev-lambda", {
-    code: pulumiArchive,
-    timeout: 120,
-    memorySize: 512,
-    handler: "handler.fetch",
-    role: contactWebkevLambdaRole.arn,
-    architectures: ["arm64"],
-    layers: [bunLambdaLayer.arn],
-    runtime: aws.lambda.Runtime.CustomAL2,
-    sourceCodeHash: zip.then((zip) => zip.outputBase64sha256),
-    environment: {
-        variables: {
-            SNS_TOPIC_ARN: contactWebkevMeMessageTopic.arn,
+export const contactWebkevLambda = new aws.lambda.Function(
+    "contact-webkev-lambda",
+    {
+        code: pulumiArchive,
+        timeout: 120,
+        memorySize: 512,
+        handler: "handler.fetch",
+        role: contactWebkevLambdaRole.arn,
+        architectures: ["arm64"],
+        layers: [bunLambdaLayer.arn],
+        runtime: aws.lambda.Runtime.CustomAL2,
+        sourceCodeHash: zip.then((zip) => zip.outputBase64sha256),
+        environment: {
+            variables: {
+                SNS_TOPIC_ARN: contactWebkevMessageTopic.arn,
+            },
         },
     },
-});
+);

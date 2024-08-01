@@ -3,15 +3,16 @@ import * as pulumi from "@pulumi/pulumi";
 import { compileDeployWebkevLambdaRole } from "../webkev/iam";
 import { awsAccountId } from "../core";
 import { webkevCFDistributionId } from "../webkev";
-import { contactWebkevMeMessageTopic } from "./sns";
+import { contactWebkevMessageTopic } from "./sns";
 
-const lambdaRoleAttachment = new aws.iam.RolePolicyAttachment(
-    "lambda-role-attachment",
-    {
-        role: compileDeployWebkevLambdaRole,
-        policyArn: aws.iam.ManagedPolicy.AWSLambdaBasicExecutionRole,
-    },
-);
+const compileDeployWebkevLambdaRoleAttachment =
+    new aws.iam.RolePolicyAttachment(
+        "compile-deploy-webkev-lambda-role-attachment",
+        {
+            role: compileDeployWebkevLambdaRole,
+            policyArn: aws.iam.ManagedPolicy.AWSLambdaBasicExecutionRole,
+        },
+    );
 
 const createCloudFrontInvalidation =
     pulumi.interpolate`arn:aws:cloudfront::${awsAccountId}:distribution/${webkevCFDistributionId}`.apply(
@@ -27,7 +28,7 @@ const createCloudFrontInvalidation =
             });
         },
     );
-const lambdaCloudFrontRolePolicy = new aws.iam.RolePolicy(
+const compileDeployWebkevLambdaCloudFrontRolePolicy = new aws.iam.RolePolicy(
     "lambda-cloudfront-role-policy",
     {
         role: compileDeployWebkevLambdaRole,
@@ -82,7 +83,7 @@ const cloudwatchRolePolicy = new aws.iam.RolePolicy("cloudwatch", {
 });
 
 const allowContactWebkevTopicPublishPolicy =
-    contactWebkevMeMessageTopic.arn.apply((arn) =>
+    contactWebkevMessageTopic.arn.apply((arn) =>
         aws.iam.getPolicyDocument({
             statements: [
                 {
@@ -116,5 +117,12 @@ export const contactWebkevLambdaRole = new aws.iam.Role(
                 ),
             },
         ],
+    },
+);
+const contactWebkevLambdaRoleAttachment = new aws.iam.RolePolicyAttachment(
+    "contact-webkev-lambda-role-attachment",
+    {
+        role: contactWebkevLambdaRole,
+        policyArn: aws.iam.ManagedPolicy.AWSLambdaBasicExecutionRole,
     },
 );
