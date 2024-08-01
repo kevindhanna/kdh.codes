@@ -4,17 +4,17 @@ import * as aws from "@pulumi/aws";
 const config = new pulumi.Config();
 const email = config.require("webkev-contact-email");
 
-const webkevContactMeMessageTopic = new aws.sns.Topic(
-    "webkev-contact-me-messages",
+export const contactWebkevMeMessageTopic = new aws.sns.Topic(
+    "contact-webkev-messages",
     {
-        name: "webkev-contact-me",
+        name: "contact-webkev-messages",
     },
 );
 
-const webkevContactMeMessageTarget = new aws.sns.TopicSubscription(
-    "webkev-contact-me-message-received",
+const contactWebkevMeMessageTarget = new aws.sns.TopicSubscription(
+    "contact-webkev-message-received",
     {
-        topic: webkevContactMeMessageTopic.arn,
+        topic: contactWebkevMeMessageTopic.arn,
         protocol: "email",
         endpoint: email,
     },

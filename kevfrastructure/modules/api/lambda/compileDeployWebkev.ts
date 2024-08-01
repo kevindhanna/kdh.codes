@@ -1,32 +1,32 @@
 import * as archive from "@pulumi/archive";
 import * as aws from "@pulumi/aws";
 import * as pulumi from "@pulumi/pulumi";
-import * as std from "@pulumi/std";
 import { resolve } from "path";
 import { existsSync } from "fs";
 
-import { exec } from "../../helpers";
+import { exec } from "../../../helpers";
 import {
     compileDeployWebkevLambdaRoleArn,
     webkevBucketId,
     webkevCFDistributionId,
-} from "../webkev";
+} from "../../webkev";
 import { bunLambdaLayer } from "./bunLayer";
-import { githubWebhookSecret } from "./secrets";
+import { githubWebhookSecret } from "../secrets";
 
-const lambdaDir = resolve(__dirname, "../../lambdevins/compile-deploy-webkev");
+const lambdaDir = resolve(
+    __dirname,
+    "../../../lambdevins/compile-deploy-webkev",
+);
 
 const version = exec('git log -1 --pretty="format:%H" .', lambdaDir);
 
 const archivePath = resolve(
     __dirname,
-    `../../artifacts/compile-deploy-webdev-${version}.zip`,
+    `../../../artifacts/compile-deploy-webdev-${version}.zip`,
 );
 const handlerPath = lambdaDir.concat(`/dist/handler.js`);
 if (!existsSync(archivePath)) {
-    pulumi.log.info(
-        `lambdevin:compileDeployWebkev: zipping compile-deploy-webkev`,
-    );
+    pulumi.log.info(`lambdevin:compileDeployWebkev: zipping`);
 
     exec(`bun run build`, lambdaDir);
 }

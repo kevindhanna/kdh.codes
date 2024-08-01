@@ -1,9 +1,9 @@
 import * as aws from "@pulumi/aws";
 import * as pulumi from "@pulumi/pulumi";
-
 import { existsSync, rmdirSync } from "fs";
 import { resolve } from "path";
-import { exec } from "../../helpers";
+
+import { exec } from "../../../helpers";
 
 export const bunBuildArgs = pulumi.output({
   tag: "bun-v1.1.20",
@@ -12,7 +12,7 @@ export const bunBuildArgs = pulumi.output({
 
 const { version, arch, archive } = bunBuildArgs.apply(({ tag, arch }) => {
   const bunRepo = "https://github.com/oven-sh/bun";
-  const artifactsPath = resolve(__dirname, "../../artifacts");
+  const artifactsPath = resolve(__dirname, "../../../artifacts");
   const bunRepoPath = artifactsPath.concat("/bun");
   const layerPath = bunRepoPath.concat("/packages/bun-lambda");
   const resultPath = artifactsPath.concat(`/${tag}-${arch}-lambda-layer.zip`);
