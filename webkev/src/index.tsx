@@ -13,6 +13,7 @@ import "./style.css";
 import { ThemeProvider } from "./components/ThemeProvider";
 import { About } from "./pages/About";
 import { Contact } from "./pages/Contact";
+import { Blog } from "./pages/Blog";
 
 export function App() {
   return (
@@ -24,6 +25,7 @@ export function App() {
             <div className="bodyContent">
               <Router>
                 <Route path="/" component={About} />
+                <Route path="/blog" component={Blog} />
                 <Route path="/contact" component={Contact} />
                 <Route path="/cv" component={CV} />
                 <Route default component={NotFound} />

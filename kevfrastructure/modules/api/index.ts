@@ -5,3 +5,4 @@ import "./dns";
 import "./github";
 import "./iam";
 import "./lambda";
+import "./sns";
