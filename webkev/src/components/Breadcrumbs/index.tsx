@@ -10,7 +10,7 @@ const locationPathMap = {
 
 export const Breadcrumbs = () => {
   const location = useLocation();
-  console.log(location.path, "FART");
+
   return (
     <text class={styles.breadcrumbs}>
       kevin
