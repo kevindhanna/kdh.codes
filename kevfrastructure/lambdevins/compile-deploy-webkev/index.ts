@@ -9,8 +9,7 @@ import {
 import { request as octokitRequest } from "@octokit/request";
 import { resolve } from "path";
 import { v6 as uuid } from "uuid";
-import { validateGithubSignature } from "./src/validateGithubSignature";
-import { validateRequestBody } from "./src/validators/validateRequest";
+import { validateRequest } from "./src/validators/validateRequest";
 
 const logResult = ({ stdout, stderr }: ShellOutput) => {
     console.log(stdout.toString());
@@ -40,7 +39,7 @@ export default {
             }
         }
 
-        const [body, invalidResponse] = await validateRequestBody(request);
+        const [body, invalidResponse] = await validateRequest(request);
         if (invalidResponse) {
             return invalidResponse;
         }

@@ -909,6 +909,13 @@
     docker-classic "npm:@pulumi/docker@3.6.1"
     mime "^2.0.0"
 
+"@pulumi/cloudflare@^5.34.0":
+  version "5.35.0"
+  resolved "https://registry.yarnpkg.com/@pulumi/cloudflare/-/cloudflare-5.35.0.tgz#6e52718db22090be22695e68ffaa0f389328e485"
+  integrity sha512-nv5vCL4SdCETkiy6KNi5jXIFK3rVwGjAMFaN8if41ApqCEWRfls/y5LzN+qylvxzSt8y05ObNdAN0jQn+rAyNQ==
+  dependencies:
+    "@pulumi/pulumi" "^3.0.0"
+
 "@pulumi/docker@^4.5.1":
   version "4.5.4"
   resolved "https://registry.yarnpkg.com/@pulumi/docker/-/docker-4.5.4.tgz#8a9a8418f4cd666118a7f8c99159cdc5dc2f8c3f"
@@ -916,6 +923,13 @@
   dependencies:
     "@pulumi/pulumi" "^3.0.0"
     semver "^5.4.0"
+
+"@pulumi/github@^6.2.3":
+  version "6.2.3"
+  resolved "https://registry.yarnpkg.com/@pulumi/github/-/github-6.2.3.tgz#8ffc07a39c6fbb1e9f7bca6c34a542943a7fe7d3"
+  integrity sha512-oDS7cxDhnZWu3MzE5Z9zGF0WQ6WAJlwVYrDZQcDELpNAZ1B3CRMBprxvgmKgnZkXQF3uDYp9DIDLwoim2AsMtw==
+  dependencies:
+    "@pulumi/pulumi" "^3.0.0"
 
 "@pulumi/pulumi@^3.0.0", "@pulumi/pulumi@^3.113.0":
   version "3.124.0"
@@ -957,6 +971,13 @@
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@pulumi/query/-/query-0.3.0.tgz#f496608e86a18c3dd31b6c533408e2441c29071d"
   integrity sha512-xfo+yLRM2zVjVEA4p23IjQWzyWl1ZhWOGobsBqRpIarzLvwNH/RAGaoehdxlhx4X92302DrpdIFgTICMN4P38w==
+
+"@pulumi/random@^4.16.3":
+  version "4.16.3"
+  resolved "https://registry.yarnpkg.com/@pulumi/random/-/random-4.16.3.tgz#a86b40dbbdb3f2e82d70122e8078a64757ce8f62"
+  integrity sha512-B1cB3RAxC/Ic6g7Rj6bJv+wJJOBR2xorWOTSSTxjr0f10KdoQxLc+vzMu11MMgOzThhL4n7n8ZSLADxc7Rzk/g==
+  dependencies:
+    "@pulumi/pulumi" "^3.0.0"
 
 "@pulumi/std@^1.7.2":
   version "1.7.2"

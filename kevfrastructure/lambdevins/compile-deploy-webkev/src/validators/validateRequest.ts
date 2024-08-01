@@ -1,7 +1,7 @@
-import { validateGithubSignature } from "./validateGithubSignature";
+import { validateSignature } from "./validateSignature";
 
 type Maybe<T> = T | undefined;
-export const validateRequestBody = async (
+export const validateRequest = async (
     request: Request,
 ): Promise<[Maybe<Record<string, unknown>>, Maybe<Response>]> => {
     const signatureHeader = request.headers.get("HTTP_X_HUB_SIGNATURE_256");
@@ -30,21 +30,10 @@ export const validateRequestBody = async (
             }),
         ];
     }
-    // const bodyReader = request.body?.getReader();
-
-    // const decoder = new TextDecoder();
-    // let body = "";
-    // while (true) {
-    //     const { done, value } = await bodyReader.read();
-    //     if (done) {
-    //         break;
-    //     }
-    //     body = body + decoder.decode(value);
-    // }
 
     const bodyJson = await request.json();
 
-    const isValid = await validateGithubSignature({
+    const isValid = await validateSignature({
         secret: process.env.GITHUB_WEBHOOK_SECRET!,
         header: signatureHeader,
         payload: JSON.stringify(bodyJson),

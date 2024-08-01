@@ -1,6 +1,4 @@
-import { createHmac } from "crypto";
-
-export const validateGithubSignature = async ({
+export const validateSignature = async ({
     secret,
     header,
     payload,

@@ -1,14 +1,11 @@
 import * as github from "@pulumi/github";
-import * as random from "@pulumi/random";
+
+import * as pulumi from "@pulumi/pulumi";
 
 import { kdhCodesRepo } from "../core";
-import { compileDeployWebkevInvokeUrl } from "./apigateway";
+import { compileDeployWebkevRoute, kavpiProdStage } from "./apigateway";
+import { githubWebhookSecret } from "./secrets";
 
-export const webhookSecret = new random.RandomString("random", {
-    length: 16,
-    special: true,
-    overrideSpecial: "/@£$",
-});
 const webkevRepoWebhook = new github.RepositoryWebhook(
     "kdh-codes-push-webhook",
     {
@@ -23,8 +20,13 @@ const webkevRepoWebhook = new github.RepositoryWebhook(
             //     kavpiProdApiMapping.domainName,
             //     "/compile-deploy-webkev",
             // ),
-            url: compileDeployWebkevInvokeUrl,
-            secret: webhookSecret.result,
+            url: pulumi.concat(
+                kavpiProdStage.invokeUrl,
+                compileDeployWebkevRoute.routeKey.apply((key) =>
+                    key.split(" "),
+                )[1],
+            ),
+            secret: githubWebhookSecret.result,
         },
     },
 );
