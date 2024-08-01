@@ -43,17 +43,14 @@ export const kavpiProdStage = new aws.apigatewayv2.Stage("kavpi-prod-stage", {
     apiId: kavpi.id,
     autoDeploy: true,
     name: "prod",
-    defaultRouteSettings: {
-        loggingLevel: "INFO",
-        throttlingBurstLimit: 1,
-        throttlingRateLimit: 1,
-    },
+    routeSettings: [
+        {
+            routeKey: compileDeployWebkevRoute.routeKey,
+            throttlingBurstLimit: 1,
+            throttlingRateLimit: 1,
+        },
+    ],
 });
-
-export const compileDeployWebkevInvokeUrl = pulumi.concat(
-    kavpiProdStage.invokeUrl,
-    compileDeployWebkevRoute.routeKey.apply((key) => key.split(" "))[1],
-);
 
 const kavpiProdStageDomainName = new aws.apigatewayv2.DomainName(
     "kavpi-prod-domain-name",
