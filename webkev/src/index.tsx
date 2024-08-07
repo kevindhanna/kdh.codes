@@ -25,7 +25,6 @@ export function App() {
             <div className="bodyContent">
               <Router>
                 <Route path="/" component={About} />
-                <Route path="/blog" component={Blog} />
                 <Route path="/contact" component={Contact} />
                 <Route path="/cv" component={CV} />
                 <Route default component={NotFound} />
