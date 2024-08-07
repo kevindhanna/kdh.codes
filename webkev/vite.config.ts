@@ -16,7 +16,9 @@ export default defineConfig(({ mode }) => {
             }),
         ],
         define: {
-            CONTACT_WEBKEV_INVOKE_URL: env.VITE_CONTACT_WEBKEV_INVOKE_URL,
+            CONTACT_WEBKEV_INVOKE_URL: JSON.stringify(
+                env.VITE_CONTACT_WEBKEV_INVOKE_URL,
+            ),
         },
     };
 });
