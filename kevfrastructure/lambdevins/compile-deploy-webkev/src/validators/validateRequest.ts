@@ -4,7 +4,7 @@ type Maybe<T> = T | undefined;
 export const validateRequest = async (
     request: Request,
 ): Promise<[Maybe<Record<string, unknown>>, Maybe<Response>]> => {
-    const signatureHeader = request.headers.get("HTTP_X_HUB_SIGNATURE_256");
+    const signatureHeader = request.headers.get("X-Hub-Signature-256");
     if (!signatureHeader) {
         console.error("Missing signature header");
         return [

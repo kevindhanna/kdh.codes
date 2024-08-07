@@ -89,7 +89,7 @@ describe("compile-deploy-webkev:fetch", () => {
                 "X-GitHub-Hook-ID": "492332293",
                 "X-GitHub-Hook-Installation-Target-ID": "828022247",
                 "X-GitHub-Hook-Installation-Target-Type": "repository",
-                HTTP_X_HUB_SIGNATURE_256:
+                "X-Hub-Signature-256":
                     "sha256=" +
                     (signature ?? validRequestSignature.digest("hex")),
             },
