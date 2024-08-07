@@ -2,12 +2,26 @@
     position: fixed;
     top: 0px;
     right: 0px;
-    width: 15vw;
+    width: 60vw;
     height: 100%;
     z-index: 1;
     background: var(--main-bg-colour);
-    border-left: 2px solid var(--main-bg-colour);
+    border-left: 1px solid var(--syntax);
     text-align: left;
     padding: 2em;
     colour: var(--grey);
+
+    @media (min-width: 1025px) {
+        width: 15vw;
+        border-left: none;
+    }
+}
+
+.closeButton {
+    padding: 0;
+    border: none;
+    font-size: large;
+    @media (min-width: 1025px) {
+        display: none;
+    }
 }

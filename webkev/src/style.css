@@ -81,12 +81,6 @@ main {
 	max-height: 100vh;
 }
 
-@media (max-width: 639px) {
-	main {
-		margin: 2rem;
-	}
-}
-
 @media (prefers-color-scheme: dark) {
 	:root {
 		--secondary-bg-colour: #181818;

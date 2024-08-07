@@ -8,6 +8,7 @@ import {
   Syntax,
 } from "../Code";
 import { Employer as EmployerType } from "../../models/Employer";
+import { Project as ProjectType } from "../../models/Project";
 import { Project } from "../Project";
 import styles from "./style.module.css";
 
@@ -18,7 +19,8 @@ export const Employer = ({
   duration,
   projects,
   technologies,
-}: EmployerType) => (
+  setActiveProject,
+}: EmployerType & { setActiveProject: (project: ProjectType) => void }) => (
   <div className={styles.Employer}>
     <text>
       <Keyword>{"emp "}</Keyword>
@@ -37,7 +39,12 @@ export const Employer = ({
       <br />
       <div className={styles.projectList}>
         {projects.map((p) => (
-          <Project {...p} />
+          <Project
+            {...p}
+            onMouseEnter={() => setActiveProject(p)}
+            onMouseLeave={() => setActiveProject(undefined)}
+            onTouchStart={() => setActiveProject(p)}
+          />
         ))}
       </div>
       <br />

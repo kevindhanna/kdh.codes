@@ -18,10 +18,10 @@ const ExternalLink = ({
   name: string;
   href: string;
 }) => (
-  <div className={styles.navLink}>
+  <a className={styles.navLink} href={href}>
     <img src={logoPath} className={styles.linkLogo} />
-    <a href={href}>{name}</a>
-  </div>
+    <text className={styles.linkText}>{name}</text>
+  </a>
 );
 
 const NavLink = ({
@@ -38,7 +38,7 @@ const NavLink = ({
       <div className={styles.navIcon}>
         <Icon />
       </div>
-      <text>{name}</text>
+      <text className={styles.navText}>{name}</text>
     </div>
   </a>
 );
@@ -51,10 +51,10 @@ export function Navbar() {
     <div className={styles.navbar}>
       <a href="/">
         <div className={styles.navHeader}>
-          <div className={styles.navLogo}>
+          <div className={styles.headerLogo}>
             <KIcon />
           </div>
-          <text className={styles.navTitle}>kdh.codes</text>
+          <text className={styles.headerTitle}>kdh.codes</text>
         </div>
       </a>
 

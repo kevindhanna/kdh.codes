@@ -3,6 +3,9 @@ import { Employer } from "../../components/Employer";
 import { Breadcrumbs } from "../../components/Breadcrumbs";
 import styles from "./style.module.css";
 import { useFillLines } from "../../hooks/useFillLines";
+import { Project } from "../../models/Project";
+import { useState } from "preact/hooks";
+import { ProjectDetail } from "../../components/ProjectDetail";
 
 const employers: EmployerType[] = [
 	{
@@ -152,6 +155,7 @@ The final result was a local test suite that was actually usable and better refl
 
 export function CV() {
 	const [lineNumbersRef, lines] = useFillLines();
+	const [activeProject, setActiveProject] = useState<Project>();
 	return (
 		<div className={styles.container}>
 			<div className={styles.pageContainer}>
@@ -161,12 +165,18 @@ export function CV() {
 					<div className={styles.employersList}>
 						{employers.map((e) => (
 							<section>
-								<Employer {...e} />
+								<Employer {...e} setActiveProject={setActiveProject} />
 								<br />
 							</section>
 						))}
 					</div>
 				</div>
+				{activeProject && (
+					<ProjectDetail
+						content={activeProject.detail}
+						onClose={() => setActiveProject(undefined)}
+					/>
+				)}
 			</div>
 		</div>
 	);

@@ -1,23 +1,16 @@
-.externalLink {
-    display: flex;
-    gap: 1em;
-}
-
-.linkLogo {
-    width: 1.5em;
-    height: 1.5em;
-    overflow: hidden;
-}
-
 .navbar {
-    padding: 2em;
     padding-right: 2.5em;
     border-right: 2px solid var(--border);
     background: var(--main-bg-colour);
+
+    padding: 0.5em;
+
+    @media (min-width: 1025px) {
+        padding: 2em;
+    }
 }
 
 .navHeader {
-    padding-bottom: 1em;
     display: flex;
     gap: 0.5em;
 
@@ -27,25 +20,39 @@
             fill: var(--link-hover);
         }
     }
+
+    @media (min-width: 1025px) {
+        padding-bottom: 1em;
+    }
 }
 
-.navLogo {
+.headerLogo {
     fill: var(--main-text-colour);
-    width: 3em;
-    height: 3em;
     text-align: center;
     justify-content: center;
     align-items: center;
-}
 
-.navIcon {
+    padding: 0.5em;
     width: 1.5em;
     height: 1.5em;
-    fill: var(--main-text-colour);
+
+    @media (min-width: 1025px) {
+        width: 3em;
+        height: 3em;
+    }
 }
 
-.navTitle {
+.headerTitle {
     font-size: 2em;
+    display: none;
+    @media (min-width: 1025px) {
+        display: unset;
+    }
+}
+
+.externalLink {
+    display: flex;
+    gap: 1em;
 }
 
 .navLink {
@@ -62,6 +69,27 @@
         }
     }
 }
+
+.linkLogo {
+    width: 1.5em;
+    height: 1.5em;
+    overflow: hidden;
+}
+
+.navIcon {
+    width: 1.5em;
+    height: 1.5em;
+    fill: var(--main-text-colour);
+}
+
+.navText,
+.linkText {
+    display: none;
+    @media (min-width: 1025px) {
+        display: unset;
+    }
+}
+
 a {
     text-decoration: none;
 }
