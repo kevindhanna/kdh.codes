@@ -9,7 +9,6 @@ const run = async () => {
         workDir: __dirname,
     });
     const output = await stack.outputs();
-    console.log(output);
 
     if (!output.contactWebkevApiEndpoint) {
         throw new Error(`Missing output of application 'frontend'`);
