@@ -24,6 +24,7 @@ const requiredEnv = [
     "GITHUB_WEBHOOK_SECRET",
     "WEBKEV_BUCKET_NAME",
     "CLOUDFRONT_DISTRIBUTION_ID",
+    "VITE_CONTACT_WEBKEV_INVOKE_URL",
 ];
 export default {
     async fetch(request: Request): Promise<Response> {

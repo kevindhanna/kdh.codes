@@ -7,9 +7,7 @@ export const kavpiKdhCodesCNameRecord = new cloudflare.Record(
     "kavpi-kdh-codes-cname-record",
     {
         zoneId: kdhCodesDnsZone.then((zone) => zone.id),
-        value: kavpiProdStage.invokeUrl.apply(
-            (url) => new URL(url).hostname + "/prod",
-        ),
+        value: kavpiProdStage.invokeUrl.apply((url) => new URL(url).hostname),
         name: "kavpi",
         type: "CNAME",
         proxied: false,

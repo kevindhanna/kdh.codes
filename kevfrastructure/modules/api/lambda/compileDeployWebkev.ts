@@ -41,10 +41,13 @@ const compileDeployWebkevLambdaToken = webkevConfig.requireSecret(
     "compile-deploy-webkev-lambda-github-token",
 );
 
+const config = new pulumi.Config("api-gateway");
+const contactWebkevProdEndpoint = config.require(
+    "contact-webkev-prod-endpoint",
+);
 export const compileDeployWebkevLambda = new aws.lambda.Function(
     "compile-deploy-webkev",
     {
-        // code: codeArchive.archive,
         code: pulumiArchive,
         timeout: 120,
         memorySize: 512,
@@ -54,13 +57,13 @@ export const compileDeployWebkevLambda = new aws.lambda.Function(
         layers: [bunLambdaLayer.arn],
         runtime: aws.lambda.Runtime.CustomAL2,
         sourceCodeHash: zip.then((zip) => zip.outputBase64sha256),
-        // sourceCodeHash: codeArchive.sourceCodeHash,
         environment: {
             variables: {
                 GITHUB_ACCESS_TOKEN: compileDeployWebkevLambdaToken,
                 GITHUB_WEBHOOK_SECRET: githubWebhookSecret.result,
                 WEBKEV_BUCKET_NAME: webkevBucketId,
                 CLOUDFRONT_DISTRIBUTION_ID: webkevCFDistributionId,
+                VITE_CONTACT_WEBKEV_INVOKE_URL: contactWebkevProdEndpoint,
             },
         },
     },

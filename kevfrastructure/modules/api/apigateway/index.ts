@@ -1,4 +1,5 @@
 import * as aws from "@pulumi/aws";
+import * as pulumi from "@pulumi/pulumi";
 
 import { kavpiLogGroup } from "../cloudwatch";
 import { kavpiKdhCodesCertificate } from "../acm";
@@ -49,4 +50,9 @@ const kavpiProdApiMapping = new aws.apigatewayv2.ApiMapping(
         domainName: kavpiProdStageDomainName.id,
         stage: kavpiProdStage.id,
     },
+);
+
+export const contactWebkevApiEndpoint = pulumi.concat(
+    kavpiProdStage.invokeUrl,
+    contactWebkevRoute.routeKey.apply((key) => key.split(" "))[1],
 );

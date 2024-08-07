@@ -1,4 +1,5 @@
 config:
+  api-gateway:contact-webkev-prod-endpoint: https://4o6396osu6.execute-api.eu-north-1.amazonaws.com/prod/contact-webkev
   aws:accessKey:
     secure: AAABAFJoS3tf603jcK43RRllljmRmq7KHbsPY0EyJQZJTX1qVhyQ1SUitvQTud1oM5BMiA==
   aws:allowedAccountIds:

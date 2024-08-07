@@ -1,6 +1,9 @@
 {
     "name": "kevfrastructure",
     "main": "index.ts",
+    "scripts": {
+        "up": "pulumi up --skip-preview && npx tsx scripts/stackUp.ts"
+    },
     "devDependencies": {
         "@types/node": "^18",
         "typescript": "^5.0.0"
