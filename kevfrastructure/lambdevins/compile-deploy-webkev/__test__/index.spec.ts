@@ -30,12 +30,13 @@ describe("compile-deploy-webkev:fetch", () => {
     let validRequestSignature: Hmac;
 
     beforeEach(async () => {
-        const file = Bun.file("test/test-tarball.tar");
+        const file = Bun.file("__test__/test-tarball.tar");
         responseData = await file.arrayBuffer();
         process.env.GITHUB_ACCESS_TOKEN = "some-token";
         process.env.GITHUB_WEBHOOK_SECRET = "some-secret";
         process.env.WEBKEV_BUCKET_NAME = "foobar";
         process.env.CLOUDFRONT_DISTRIBUTION_ID = "barfoo";
+        process.env.VITE_CONTACT_WEBKEV_INVOKE_URL = "https://some.invoke.url";
 
         s3Client = { send: mock(() => {}) };
         cloudFrontClient = { send: mock(() => {}) };
