@@ -1,12 +1,21 @@
 .navbar {
-    padding-right: 2.5em;
-    border-right: 2px solid var(--border);
     background: var(--main-bg-colour);
-
-    padding: 0.5em;
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    justify-content: space-around;
+    padding-left: 1em;
+    -moz-box-shadow: 0 -2px 10px var(--shadow);
+    box-shadow: 0 -2px 10px var(--shadow);
 
     @media (min-width: 1025px) {
-        padding: 2em;
+        position: relative;
+        width: unset;
+        border-right: 2px solid var(--border);
+        display: block;
+        padding-top: 2em;
+        padding-right: 2em;
     }
 }
 
@@ -50,6 +59,16 @@
     }
 }
 
+nav {
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-evenly;
+
+    @media (min-width: 1025px) {
+        display: block;
+    }
+}
+
 .externalLink {
     display: flex;
     gap: 1em;
@@ -85,8 +104,10 @@
 .navText,
 .linkText {
     display: none;
+
     @media (min-width: 1025px) {
-        display: unset;
+        display: flex;
+        justify-content: center;
     }
 }
 

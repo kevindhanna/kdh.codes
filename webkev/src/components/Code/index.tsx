@@ -1,4 +1,5 @@
 import { type ComponentChildren } from "preact";
+import { cn } from "../../helpers/cn";
 import styles from "./style.module.css";
 
 export const Syntax = ({ children }: { children: ComponentChildren }) => (
@@ -17,9 +18,15 @@ export const Variable = ({ children }: { children: ComponentChildren }) => (
   <text className={styles.variable}>{children}</text>
 );
 
-export const StringEl = ({ children }: { children: ComponentChildren }) => (
+export const StringEl = ({
+  children,
+  className,
+}: {
+  children: ComponentChildren;
+  className?: string;
+}) => (
   <text>
-    <text className={styles.string}>'{children}'</text>
+    <text className={cn(styles.string, className)}>'{children}'</text>
   </text>
 );
 

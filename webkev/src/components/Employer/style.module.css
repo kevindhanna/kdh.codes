@@ -6,6 +6,18 @@
     }
 }
 
+.mobile {
+    @media (min-width: 1025px) {
+        display: none;
+    }
+}
+.nonMobile {
+    display: none;
+    @media (min-width: 1025px) {
+        display: block;
+    }
+}
+
 .projectList {
     display: flex;
     flex-direction: column;

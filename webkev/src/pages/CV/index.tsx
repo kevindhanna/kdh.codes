@@ -13,6 +13,7 @@ const employers: EmployerType[] = [
 		website: "whereby.com",
 		description: "Standalone or embedded video calls powered by WebRTC",
 		duration: "Jul 2023 - Present (1y)",
+		durationShort: "7/23 - now",
 		technologies: [
 			"Typescript",
 			"NodeJS",
@@ -69,6 +70,7 @@ For example, pointing up could be used to mute/unmute your microhpone, or puttin
 		website: "contact.xyz",
 		description: "Online marketplace for creatives in the fashion industry",
 		duration: "May 2021 - Jun 2023 (2y 1m)",
+		durationShort: "5/21 - 6/23",
 		technologies: [
 			"Typescript",
 			"React",
@@ -126,6 +128,7 @@ I added some small tweaks to the query handling and managed to reduce the averag
 		description:
 			"E-commerce platform helping farmers lower costs by pooling their buying power",
 		duration: "Jan 2020 - May 2021 (1y 4m)",
+		durationShort: "1/20 - 5/21",
 		projects: [
 			{
 				name: "PDF Invoice Delivery",

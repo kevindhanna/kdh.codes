@@ -30,6 +30,9 @@ a {
 }
 
 .indent {
-    padding-left: 2em;
+    padding-left: 1em;
     border-left: 1px solid var(--indent-indicator);
+    @media (min-width: 1025px) {
+        padding-left: 2em;
+    }
 }

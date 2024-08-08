@@ -10,6 +10,7 @@
     text-align: left;
     padding: 2em;
     colour: var(--grey);
+    overflow: auto;
 
     @media (min-width: 1025px) {
         width: 15vw;
@@ -20,7 +21,10 @@
 .closeButton {
     padding: 0;
     border: none;
-    font-size: large;
+    font-size: x-large;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    background: none;
     @media (min-width: 1025px) {
         display: none;
     }

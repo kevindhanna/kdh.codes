@@ -17,6 +17,7 @@ export const Employer = ({
   website,
   description,
   duration,
+  durationShort,
   projects,
   technologies,
   setActiveProject,
@@ -24,10 +25,16 @@ export const Employer = ({
   <div className={styles.Employer}>
     <text>
       <Keyword>{"emp "}</Keyword>
-      <ClassName>{name}</ClassName>(<StringEl>{duration}</StringEl>)
+      <ClassName>{name}</ClassName>(
+      <StringEl className={styles.nonMobile}>{duration}</StringEl>
+      <StringEl className={styles.mobile}>{durationShort}</StringEl>)
       <Syntax>{": "}</Syntax>
       <Link>
-        <a href={`https://${website}`} target="blank">
+        <a
+          href={`https://${website}`}
+          target="blank"
+          className={styles.nonMobile}
+        >
           {website}
         </a>
       </Link>
@@ -43,7 +50,7 @@ export const Employer = ({
             {...p}
             onMouseEnter={() => setActiveProject(p)}
             onMouseLeave={() => setActiveProject(undefined)}
-            onTouchStart={() => setActiveProject(p)}
+            onTouchEnd={() => setActiveProject(p)}
           />
         ))}
       </div>

@@ -21,7 +21,7 @@
 	--main-text-colour: #383a42;
 	--secondary-bg-colour: #fafafa;
 	--tertiary-bg-colour: #f0f0f0;
-	--shadow: var(--grey);
+	--shadow: var(--lighter-grey);
 	--border: var(--lighter-grey);
 
 	--line-numbers: #888;
@@ -61,11 +61,14 @@ body {
 
 .bodyContent {
 	width: 100%;
-	-moz-box-shadow: inset 0 0 10px var(--shadow);
-	box-shadow: inset 0 0 10px var(--shadow);
 	background: var(--secondary-bg-colour);
 	flex: auto;
 	overflow-y: auto;
+
+	@media (min-width: 1025px) {
+		-moz-box-shadow: inset 0 0 5px var(--shadow);
+		box-shadow: inset 0 0 5px var(--shadow);
+	}
 }
 
 a {
@@ -79,6 +82,11 @@ h2 {
 main {
 	display: flex;
 	max-height: 100vh;
+	flex-direction: column-reverse;
+
+	@media (min-width: 1025px) {
+		flex-direction: row;
+	}
 }
 
 @media (prefers-color-scheme: dark) {
