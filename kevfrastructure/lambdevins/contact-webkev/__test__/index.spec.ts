@@ -82,7 +82,7 @@ describe("contact-webkev:fetch", () => {
     it("submits a message to the sns topic", async () => {
         const response = await contactWebkev.fetch(buildRequest(validBody));
 
-        expect(response.status).toEqual(201);
+        expect(response.status).toEqual(303);
         expect(PublishCommand).toHaveBeenCalledWith(
             expect.objectContaining({
                 Subject: expect.stringContaining(validBody.name),
