@@ -1,5 +1,6 @@
 .Employer {
     padding-right: 1.5em;
+    white-space: nowrap;
     @media (min-width: 1025px) {
         border-radius: 1em;
         padding-left: 1.5em;
@@ -14,7 +15,7 @@
 .nonMobile {
     display: none;
     @media (min-width: 1025px) {
-        display: block;
+        display: unset;
     }
 }
 

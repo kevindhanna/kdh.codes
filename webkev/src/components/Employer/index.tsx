@@ -12,6 +12,13 @@ import { Project as ProjectType } from "../../models/Project";
 import { Project } from "../Project";
 import styles from "./style.module.css";
 
+const ReactiveDuration = ({ short, long }: {short: string; long:string}) => (
+  <>
+    <StringEl className={styles.nonMobile}>{long}</StringEl>
+    <StringEl className={styles.mobile}>{short}</StringEl>
+  </>
+)
+
 export const Employer = ({
   name,
   website,
@@ -25,16 +32,10 @@ export const Employer = ({
   <div className={styles.Employer}>
     <text>
       <Keyword>{"emp "}</Keyword>
-      <ClassName>{name}</ClassName>(
-      <StringEl className={styles.nonMobile}>{duration}</StringEl>
-      <StringEl className={styles.mobile}>{durationShort}</StringEl>)
+      <ClassName>{name}</ClassName>(<ReactiveDuration short={durationShort} long={duration} />)
       <Syntax>{": "}</Syntax>
       <Link>
-        <a
-          href={`https://${website}`}
-          target="blank"
-          className={styles.nonMobile}
-        >
+        <a href={`https://${website}`} target="blank">
           {website}
         </a>
       </Link>
