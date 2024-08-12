@@ -47,6 +47,6 @@ The root of this repo and the `/modules` dir is the IAC. It creates a few things
  
 ## TODO
 
-- a lambda proxy for github, as the build takes longer than the request timeout so Github sees 504 responses
+- a lambda proxy for github, as the build takes longer than the request timeout so Github sees 504 responses (SNS maybe?)
 - smarter compile-deploy-webkev that only deploys when changes are detected
 - a better way to handle lambda builds. I feel like something with [Dynamic Resources](https://www.pulumi.com/docs/concepts/resources/dynamic-providers/) could do it but couldn't get it to work (see resources/LocalCodeArchive)
