@@ -41,8 +41,8 @@ export const webkevCFDistribution = new aws.cloudfront.Distribution(
         customErrorResponses: [
             {
                 errorCode: 404,
-                responseCode: 404,
-                responsePagePath: "/404/index.html",
+                responseCode: 200,
+                responsePagePath: "/index.html",
             },
         ],
         loggingConfig: {
