@@ -1,10 +1,24 @@
-# `WebKev`
+# WebKev
 
-This is a Preact SSR (for now? Mabye?) app that just shows some info about me for now.
+This is the [Preact](https://preactjs.com) frontend, nothing special really, all the fun stuff happens when we deploy it.
 
-Dreams include but are not limited to:
-- themes
-- expanded experience section with a more in-depth description on the right in _another_ sidebar
-- maybe some personal project stuff? Cassette if it ever happens?
-- Maybe write it all in markdown and parse/render it as 'code'
+It uses [Bun](https://bun.sh) runtime/dep manager for funsies and [Vite](https://vitejs.dev/guide/) to build.
+
+## dev
+Install Bun, clone this repo and run `bun install` to get the dependencies.
+
+`bun dev` will start the development server, but the contact form won't work ¯\_(ツ)_/¯ 
+
+## testing
+
+err... maybe one day
+
+## deployment
+
+See the kevfrastructure module
+
+## TODO
+
+- blog maybe?
+- DIY analytics?
 
