@@ -8,7 +8,7 @@
     colour: var(--grey);
     overflow: auto;
     bottom: 0px;
-    height: 40vh;
+    height: 60vh;
     position: absolute;
 
     @media (min-width: 1025px) {
