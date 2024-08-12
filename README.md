@@ -14,4 +14,4 @@ It uses [Bun](https://bun.sh) runtime/dep manager for funsies and [Vite](https:/
 
 ## kevfrastructure
 
-A few things lumped into one module, but mostly [Pulumi](https://www.pulumi.com) IAC to build and deploy Webkev and a lambda to handle the contact form submissions.
+A few things lumped into one module, but mostly [Pulumi](https://www.pulumi.com) IAC to build, deploy and host Webkev and a lambda to handle the contact form submissions.
