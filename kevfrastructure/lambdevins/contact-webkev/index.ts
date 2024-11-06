@@ -37,14 +37,9 @@ export default {
             }),
         );
 
-        console.log("Submitted, redirecting");
-        const origin = request.headers.get("origin");
+        console.log("Submitted");
         return new Response("Thanks!", {
-            status: 303,
-            headers: {
-                Location: `${origin}/contact?submitted=true`,
-                "Content-Type": "text/plain",
-            },
+            status: 201,
         });
     },
 };
