@@ -12,7 +12,7 @@ const employers: EmployerType[] = [
 		name: "Whereby",
 		website: "whereby.com",
 		description: "Standalone or embedded video calls powered by WebRTC",
-		duration: "Jul 2023 - Present (1y)",
+		duration: "Jul 2023 - Present",
 		durationShort: "7/23 - now",
 		technologies: [
 			"Typescript",
@@ -36,7 +36,7 @@ As Whereby started to chase larger clients (espeically American clients for some
 This feature was explored several years prior to me joining the team and was postponed due to the expected complexity and little demand for the feature.
 After it was ressurected, I was tasked with investigating possible solutions and estimating delivery of the feature. In a two weeks I put together a proof of concept and could demonstrate dialling into a room with acceptible quality and latency.
 
-A further few weeks were spent designing a production implementation to the solution, which is in development as you read this.
+After designing a production implementation, dial-in was enabled for the first customer about 3 months after the project began.
 				`,
 			},
 			{
@@ -69,7 +69,7 @@ For example, pointing up could be used to mute/unmute your microhpone, or puttin
 		name: "Contact",
 		website: "contact.xyz",
 		description: "Online marketplace for creatives in the fashion industry",
-		duration: "May 2021 - Jun 2023 (2y 1m)",
+		duration: "May 2021 - Jun 2023",
 		durationShort: "5/21 - 6/23",
 		technologies: [
 			"Typescript",
@@ -127,7 +127,7 @@ I added some small tweaks to the query handling and managed to reduce the averag
 		technologies: ["PHP", "Symfony", "GCP", "MySQL"],
 		description:
 			"E-commerce platform helping farmers lower costs by pooling their buying power",
-		duration: "Jan 2020 - May 2021 (1y 4m)",
+		duration: "Jan 2020 - May 2021",
 		durationShort: "1/20 - 5/21",
 		projects: [
 			{
