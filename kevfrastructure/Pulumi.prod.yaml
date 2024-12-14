@@ -14,4 +14,4 @@ config:
     secure: AAABAFg2QOAOrrPlqlVEQLrXAgeFgJoj2s1+S3v6XDwA6baFE3c124/3QSD00biV8qBCK0YHK9YIY2MbABzzvJN8eJXa06lpik2nWcxWF+WsZPuFY87wUI8FFamLqikyAp+6GS7CODDg5EE4C5FaG5XG1Qzlx1xUtxJSrGg=
   kevfrastructure:webkev-contact-email: me@kdh.codes
   webkev:compile-deploy-webkev-lambda-github-token:
-    secure: AAABAJmDFrpX6GrzuFy+YSIl/F8q9HBxjSpuSlxNQmL8CKKpaaoBB3L2LucGq9erhccK4eEGODp5wED81t5c4fY5Q3CdLoDpDBRWaFBGWZxCyMfz6g4N7fYRgFRfLL8ZIQ8W3Ec1L9Oo6RfV+pcor89n1mYauWd74yGFu+M=
+    secure: AAABACxGvburnyn56Is4BtWkuS1DjBF3Wn4v8cOWWOG+7/iJhYtjIP7Tobx3RHFqJA0A+uq7Tqkfjrm3be233FRyAXTPQMlG4h1HKlxw826aoiY1v4Hj5vxlSGRJvFKU2+GwyXBN6X0Ggu0ZV67WvOwPHlXNOa2Pp6eNkTA=
