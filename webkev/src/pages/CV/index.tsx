@@ -27,6 +27,18 @@ const employers: EmployerType[] = [
 		],
 		projects: [
 			{
+				name: "Webhook Insights",
+				description:
+					"Allow developers to see a history of webhook events from their Whereby meetings",
+				detail: `
+Whereby delivers about 20,000 webhooks to customer endpoints every day. To make developers lives easier when implementing or debugging webhooks, we decided to provide a dashboard that shows a customer all their webhook deliveries for the past 30 days.
+
+On delivery (success or failure), the details of the webhook event are pushed to a Kinsis Firehose that eventually writes the data to an AWS Redshift database.
+
+Alongside this we added a notification email that will let users know if something went wrong when trying to deliver the webhook.
+			`,
+			},
+			{
 				name: "Dial-In",
 				description:
 					"Allow users to dial into a video call from their telephone over PSTN",
