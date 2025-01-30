@@ -27,6 +27,18 @@ const employers: EmployerType[] = [
 		],
 		projects: [
 			{
+				name: "AI Speech-to-Text service",
+				description:
+					"Host our own STT service for meeting captions and trascription",
+				detail: `
+Live captions and meeting transcriptions are currently provided by streaming meeting audio to a third party service. As part of a year-end hackathon, I had a crack at spinning up a service to create these real-time transcriptions ourselves.
+
+At the end of the week I had a proof of concept service running that was able to privide transcriptions with comparable performance to our current third party solution.
+
+After running the numbers for the cost of this hacked together service, we determined it was about 5x cheaper in it's current unoptimised state than the third party provider, opening up a possibility for significant savings on this front.
+				`,
+			},
+			{
 				name: "Webhook Insights",
 				description:
 					"Allow developers to see a history of webhook events from their Whereby meetings",
@@ -36,7 +48,7 @@ Whereby delivers about 20,000 webhooks to customer endpoints every day. To make 
 On delivery (success or failure), the details of the webhook event are pushed to a Kinsis Firehose that eventually writes the data to an AWS Redshift database.
 
 Alongside this we added a notification email that will let users know if something went wrong when trying to deliver the webhook.
-			`,
+				`,
 			},
 			{
 				name: "Dial-In",
