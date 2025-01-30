@@ -30,9 +30,30 @@ export const StringEl = ({
   </text>
 );
 
-export const Comment = ({ children }: { children: ComponentChildren }) => (
-  <text className={styles.comment}>// {children}</text>
-);
+export const Comment = ({ children }: { children: string }) => {
+  const parts = children.split("\n");
+
+  if (parts.length > 1) {
+    return (
+      <div className={styles.multilineComment}>
+        <text className={styles.comment}>/**</text>
+        {parts.map((part) => (
+          <>
+            <br />
+            <text className={cn(styles.comment, styles.multilineCommentBody)}>
+              * {part}
+            </text>
+          </>
+        ))}
+        <br />
+        <text className={cn(styles.comment, styles.multilineCommentBody)}>
+          */
+        </text>
+      </div>
+    );
+  }
+  return <text className={styles.comment}>// {children}</text>;
+};
 
 export const Link = ({ children }: { children: ComponentChildren }) => (
   <text className={styles.link}>{children}</text>

@@ -36,3 +36,16 @@ a {
         padding-left: 2em;
     }
 }
+
+.multilineComment {
+    padding-left: 0.5em;
+    @media (min-width: 1025px) {
+        padding-left: 1em;
+    }
+}
+.multilineCommentBody {
+    padding-left: 0.5em;
+    @media (min-width: 1025px) {
+        padding-left: 1em;
+    }
+}
