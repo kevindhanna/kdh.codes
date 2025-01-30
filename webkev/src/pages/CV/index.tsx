@@ -75,18 +75,6 @@ I experimented with some P2P solutions where each participant generates their ow
 The fully diarised and timestamped captions generated this way allowed the team to quickly extend captioning functionality to full meeting transcriptions, and even prototype live translation.
 				`,
 			},
-			{
-				name: "Accessibility Improvements",
-				description:
-					"Bring the Whereby meeting experience in line with the WCAG 2.1 guidelines",
-				detail: `
-The pre-build Whereby meeting experience is great, but lacked accessibility features when I joined the team. I implemented full keyboard navigation aligning with WCAG 2.1 guidelines.
-
-As a fun addition I used an in-browser gesture detection model to enable actions/emojis to be triggered from physical gestures.
-
-For example, pointing up could be used to mute/unmute your microhpone, or putting your hands together in a heart shape could send the 🫶 emoji.
-				`,
-			},
 		],
 	},
 	{
