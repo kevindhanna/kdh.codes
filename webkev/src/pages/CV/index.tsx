@@ -29,7 +29,7 @@ const employers: EmployerType[] = [
 			{
 				name: "AI Speech-to-Text service",
 				description:
-					"Host our own STT service for meeting captions and trascription",
+					"Host our own STT service for meeting captions and transcription",
 				detail: `
 Live captions and meeting transcriptions are currently provided by streaming meeting audio to a third party service. As part of a year-end hackathon, I had a crack at spinning up a service to create these real-time transcriptions ourselves.
 
